@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:saasfork_design_system/atoms/buttons/link_button.dart';
 import 'package:saasfork_design_system/foundations/sizes.dart';
+import 'package:saasfork_design_system/saasfork_design_system.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-@widgetbook.UseCase(name: 'Default', type: LinkButton)
+@widgetbook.UseCase(name: 'Default', type: LinkButtonWidget)
 Widget buildLinkButtonUseCase(BuildContext context) {
   final label = context.knobs.string(
     label: 'Button Label',
@@ -19,5 +19,7 @@ Widget buildLinkButtonUseCase(BuildContext context) {
     description: 'Taille du bouton lien',
   );
 
-  return Center(child: LinkButton(label: label, size: size, onPressed: () {}));
+  return Center(
+    child: LinkButtonWidget(label: label, size: size, onPressed: () {}),
+  );
 }

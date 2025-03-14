@@ -3,35 +3,89 @@ import 'package:saasfork_design_system/foundations/sizes.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
 
 class AppTheme {
+  static OutlineInputBorder _createInputBorder(Color color) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(AppSpacing.sm),
+      borderSide: BorderSide(color: color),
+    );
+  }
+
+  static ButtonStyle _createElevatedButtonStyle({
+    required Color backgroundColor,
+    required Color foregroundColor,
+    BorderSide? side,
+  }) {
+    return ButtonStyle(
+      backgroundColor: WidgetStateProperty.all(backgroundColor),
+      foregroundColor: WidgetStateProperty.all(foregroundColor),
+      padding: WidgetStateProperty.all(AppSizes.getPadding(ComponentSize.md)),
+      shape: WidgetStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.sm),
+          side: side ?? BorderSide.none,
+        ),
+      ),
+      textStyle: WidgetStateProperty.all(AppTypography.buttonText),
+    );
+  }
+
+  static ButtonStyle _createOutlinedButtonStyle({
+    required Color foregroundColor,
+    required Color backgroundColor,
+    BorderSide? side,
+  }) {
+    return ButtonStyle(
+      foregroundColor: WidgetStateProperty.all(foregroundColor),
+      backgroundColor: WidgetStateProperty.all(backgroundColor),
+      padding: WidgetStateProperty.all(AppSizes.getPadding(ComponentSize.md)),
+      textStyle: WidgetStateProperty.all(AppTypography.buttonText),
+      shape: WidgetStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.sm),
+          side: side ?? BorderSide.none,
+        ),
+      ),
+    );
+  }
+
+  static InputDecorationTheme _createInputDecorationTheme({
+    required Color fillColor,
+    required Color hintColor,
+    required Color enabledBorderColor,
+    required Color focusedBorderColor,
+    required Color errorBorderColor,
+  }) {
+    return InputDecorationTheme(
+      filled: true,
+      fillColor: fillColor,
+      contentPadding: AppSizes.getPadding(ComponentSize.md),
+      hoverColor: Colors.transparent,
+      hintStyle: AppTypography.getScaledStyle(
+        AppTypography.bodyText,
+        ComponentSize.md,
+      ).copyWith(color: hintColor),
+      enabledBorder: _createInputBorder(enabledBorderColor),
+      focusedBorder: _createInputBorder(focusedBorderColor),
+      errorBorder: _createInputBorder(errorBorderColor),
+      focusedErrorBorder: _createInputBorder(errorBorderColor),
+    );
+  }
+
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(AppColors.indigo),
-        foregroundColor: WidgetStateProperty.all(Colors.white),
-        padding: WidgetStateProperty.all(AppSizes.getPadding(ComponentSize.md)),
-        shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSpacing.sm),
-            side: BorderSide(color: AppColors.indigo.s600, width: 1),
-          ),
-        ),
-        textStyle: WidgetStateProperty.all(AppTypography.buttonText),
+      style: _createElevatedButtonStyle(
+        backgroundColor: AppColors.indigo,
+        foregroundColor: Colors.white,
+        side: BorderSide(color: AppColors.indigo.s600, width: 1),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
-      style: ButtonStyle(
-        foregroundColor: WidgetStateProperty.all(Colors.black),
-        backgroundColor: WidgetStateProperty.all(Colors.white),
-        padding: WidgetStateProperty.all(AppSizes.getPadding(ComponentSize.md)),
-        textStyle: WidgetStateProperty.all(AppTypography.buttonText),
-        shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSpacing.sm),
-            side: BorderSide(color: Colors.grey.shade300, width: 1),
-          ),
-        ),
+      style: _createOutlinedButtonStyle(
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        side: BorderSide(color: Colors.grey.shade300, width: 1),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
@@ -50,37 +104,34 @@ class AppTheme {
         side: WidgetStateProperty.all(BorderSide.none),
       ),
     ),
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: AppColors.indigo.s400, // Couleur du curseur
+      selectionColor: AppColors.indigo.s400, // Sélection de texte
+      selectionHandleColor: AppColors.indigo.s400, // Poignée de sélection
+    ),
+    inputDecorationTheme: _createInputDecorationTheme(
+      fillColor: Colors.white,
+      hintColor: AppColors.gray.s300,
+      enabledBorderColor: AppColors.gray.s300,
+      focusedBorderColor: AppColors.indigo.s400,
+      errorBorderColor: AppColors.red.s300,
+    ),
   );
 
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     scaffoldBackgroundColor: AppColors.grey.s900,
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(AppColors.indigo.s400),
-        foregroundColor: WidgetStateProperty.all(Colors.white),
-        padding: WidgetStateProperty.all(AppSizes.getPadding(ComponentSize.md)),
-        shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSpacing.sm),
-          ),
-        ),
-        textStyle: WidgetStateProperty.all(AppTypography.buttonText),
+      style: _createElevatedButtonStyle(
+        backgroundColor: AppColors.indigo.s400,
+        foregroundColor: Colors.white,
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
-      style: ButtonStyle(
-        foregroundColor: WidgetStateProperty.all(Colors.white),
-        backgroundColor: WidgetStateProperty.all(AppColors.grey.s800),
-        padding: WidgetStateProperty.all(AppSizes.getPadding(ComponentSize.md)),
-        textStyle: WidgetStateProperty.all(AppTypography.buttonText),
-        shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSpacing.sm),
-            side: BorderSide.none,
-          ),
-        ),
-        side: WidgetStateProperty.all(BorderSide.none),
+      style: _createOutlinedButtonStyle(
+        foregroundColor: Colors.white,
+        backgroundColor: AppColors.grey.s800,
+        side: BorderSide.none,
       ),
     ),
     textButtonTheme: TextButtonThemeData(
@@ -98,6 +149,18 @@ class AppTheme {
         splashFactory: NoSplash.splashFactory,
         side: WidgetStateProperty.all(BorderSide.none),
       ),
+    ),
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: AppColors.indigo.s400, // Couleur du curseur
+      selectionColor: AppColors.indigo.s400, // Sélection de texte
+      selectionHandleColor: AppColors.indigo.s400, // Poignée de sélection
+    ),
+    inputDecorationTheme: _createInputDecorationTheme(
+      fillColor: AppColors.grey.s800,
+      hintColor: AppColors.gray.s200,
+      enabledBorderColor: AppColors.gray.s600,
+      focusedBorderColor: AppColors.indigo.s400,
+      errorBorderColor: AppColors.red.s300,
     ),
   );
 }

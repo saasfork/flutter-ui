@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:saasfork_design_system/foundations/sizes.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
 
-class LinkButton extends StatelessWidget {
+class LinkButtonWidget extends StatelessWidget {
   final String label;
   final ComponentSize size;
   final VoidCallback onPressed;
 
-  const LinkButton({
+  const LinkButtonWidget({
     required this.label,
     required this.onPressed,
     this.size = ComponentSize.md,

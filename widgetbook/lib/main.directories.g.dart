@@ -17,6 +17,7 @@ import 'package:widgetbook_workspace/atoms/buttons/link_button.dart' as _i4;
 import 'package:widgetbook_workspace/atoms/buttons/main_button.dart' as _i5;
 import 'package:widgetbook_workspace/atoms/buttons/secondary_button.dart'
     as _i6;
+import 'package:widgetbook_workspace/atoms/inputs/text_field.dart' as _i7;
 
 final directories = <_i1.WidgetbookNode>[
   _i1.WidgetbookFolder(
@@ -40,7 +41,7 @@ final directories = <_i1.WidgetbookNode>[
             ),
           ),
           _i1.WidgetbookLeafComponent(
-            name: 'LinkButton',
+            name: 'LinkButtonWidget',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
               builder: _i4.buildLinkButtonUseCase,
@@ -58,6 +59,18 @@ final directories = <_i1.WidgetbookNode>[
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
               builder: _i6.buildCoolButtonUseCase,
+            ),
+          ),
+        ],
+      ),
+      _i1.WidgetbookFolder(
+        name: 'inputs',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'TextFieldWidget',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Default',
+              builder: _i7.buildTextFieldUseCase,
             ),
           ),
         ],
