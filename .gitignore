@@ -81,3 +81,5 @@ debug
 # Certificats
 *.pem
 *.key
+
+.vscode
