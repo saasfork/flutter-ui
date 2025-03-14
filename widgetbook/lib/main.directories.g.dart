@@ -18,6 +18,7 @@ import 'package:widgetbook_workspace/atoms/buttons/main_button.dart' as _i5;
 import 'package:widgetbook_workspace/atoms/buttons/secondary_button.dart'
     as _i6;
 import 'package:widgetbook_workspace/atoms/inputs/text_field.dart' as _i7;
+import 'package:widgetbook_workspace/molecules/forms/form_field.dart' as _i8;
 
 final directories = <_i1.WidgetbookNode>[
   _i1.WidgetbookFolder(
@@ -71,6 +72,23 @@ final directories = <_i1.WidgetbookNode>[
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
               builder: _i7.buildTextFieldUseCase,
+            ),
+          ),
+        ],
+      ),
+    ],
+  ),
+  _i1.WidgetbookFolder(
+    name: 'molecules',
+    children: [
+      _i1.WidgetbookFolder(
+        name: 'forms',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'SFFormfield',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Default',
+              builder: _i8.buildFormFieldUseCase,
             ),
           ),
         ],

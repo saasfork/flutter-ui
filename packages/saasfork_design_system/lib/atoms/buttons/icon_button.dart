@@ -4,7 +4,7 @@ import 'package:saasfork_design_system/saasfork_design_system.dart';
 
 enum IconPosition { start, end }
 
-class IconButtonWidget extends StatelessWidget {
+class SFIconButton extends StatelessWidget {
   final IconData icon;
   final ComponentSize size;
   final VoidCallback onPressed;
@@ -12,7 +12,7 @@ class IconButtonWidget extends StatelessWidget {
   final String? label;
   final IconPosition iconPosition;
 
-  const IconButtonWidget({
+  const SFIconButton({
     required this.icon,
     required this.onPressed,
     this.size = ComponentSize.md,

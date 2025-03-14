@@ -4,7 +4,7 @@ import 'package:saasfork_design_system/saasfork_design_system.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-@widgetbook.UseCase(name: 'Default', type: CircularButtonWidget)
+@widgetbook.UseCase(name: 'Default', type: SFCircularButton)
 Widget buildCircularButtonUseCase(BuildContext context) {
   final Map<String, IconData> iconOptions = {
     'Add': Icons.add,
@@ -31,10 +31,6 @@ Widget buildCircularButtonUseCase(BuildContext context) {
   );
 
   return Center(
-    child: CircularButtonWidget(
-      icon: selectedIcon,
-      size: size,
-      onPressed: () {},
-    ),
+    child: SFCircularButton(icon: selectedIcon, size: size, onPressed: () {}),
   );
 }

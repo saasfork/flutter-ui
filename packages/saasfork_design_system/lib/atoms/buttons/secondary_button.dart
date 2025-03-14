@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:saasfork_design_system/foundations/sizes.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
 
-class SecondaryButton extends StatelessWidget {
+class SFSecondaryButton extends StatelessWidget {
   final String label;
   final ComponentSize size;
   final VoidCallback onPressed;
 
-  const SecondaryButton({
+  const SFSecondaryButton({
     required this.label,
     required this.onPressed,
     this.size = ComponentSize.md,

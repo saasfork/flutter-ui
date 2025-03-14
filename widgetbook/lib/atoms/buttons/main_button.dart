@@ -4,7 +4,7 @@ import 'package:saasfork_design_system/saasfork_design_system.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-@widgetbook.UseCase(name: 'Default', type: MainButtonWidget)
+@widgetbook.UseCase(name: 'Default', type: SFMainButton)
 Widget buildCoolButtonUseCase(BuildContext context) {
   final label = context.knobs.string(
     label: 'Button Label',
@@ -20,6 +20,6 @@ Widget buildCoolButtonUseCase(BuildContext context) {
   );
 
   return Center(
-    child: MainButtonWidget(label: label, size: size, onPressed: () {}),
+    child: SFMainButton(label: label, size: size, onPressed: () {}),
   );
 }

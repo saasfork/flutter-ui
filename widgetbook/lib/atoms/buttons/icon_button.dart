@@ -4,7 +4,7 @@ import 'package:saasfork_design_system/saasfork_design_system.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-@widgetbook.UseCase(name: 'Default', type: IconButtonWidget)
+@widgetbook.UseCase(name: 'Default', type: SFIconButton)
 Widget buildIconButtonUseCase(BuildContext context) {
   final label = context.knobs.string(
     label: 'Button Label',
@@ -27,7 +27,7 @@ Widget buildIconButtonUseCase(BuildContext context) {
   );
 
   return Center(
-    child: IconButtonWidget(
+    child: SFIconButton(
       label: label,
       icon: Icons.add,
       onPressed: () {},

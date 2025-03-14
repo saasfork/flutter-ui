@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:saasfork_design_system/foundations/sizes.dart';
 
-class CircularButtonWidget extends StatelessWidget {
+class SFCircularButton extends StatelessWidget {
   final IconData icon;
   final ComponentSize size;
   final VoidCallback onPressed;
 
-  const CircularButtonWidget({
+  const SFCircularButton({
     required this.icon,
     required this.onPressed,
     this.size = ComponentSize.md,
