@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:saasfork_design_system/foundations/sizes.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -11,5 +12,12 @@ Widget buildCoolButtonUseCase(BuildContext context) {
     description: 'Text displayed on the button',
   );
 
-  return Center(child: MainButton(label: label, onPressed: () {}));
+  final size = context.knobs.list<ComponentSize>(
+    label: 'Button Size',
+    options: ComponentSize.values,
+    initialOption: ComponentSize.md,
+    description: 'Size of the button',
+  );
+
+  return Center(child: MainButton(label: label, size: size, onPressed: () {}));
 }
