@@ -13,9 +13,10 @@
 import 'package:widgetbook/widgetbook.dart' as _i1;
 import 'package:widgetbook_workspace/atoms/buttons/circular_button.dart' as _i2;
 import 'package:widgetbook_workspace/atoms/buttons/icon_button.dart' as _i3;
-import 'package:widgetbook_workspace/atoms/buttons/main_button.dart' as _i4;
+import 'package:widgetbook_workspace/atoms/buttons/link_button.dart' as _i4;
+import 'package:widgetbook_workspace/atoms/buttons/main_button.dart' as _i5;
 import 'package:widgetbook_workspace/atoms/buttons/secondary_button.dart'
-    as _i5;
+    as _i6;
 
 final directories = <_i1.WidgetbookNode>[
   _i1.WidgetbookFolder(
@@ -39,17 +40,24 @@ final directories = <_i1.WidgetbookNode>[
             ),
           ),
           _i1.WidgetbookLeafComponent(
-            name: 'MainButtonWidget',
+            name: 'LinkButton',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i4.buildCoolButtonUseCase,
+              builder: _i4.buildLinkButtonUseCase,
             ),
           ),
           _i1.WidgetbookLeafComponent(
-            name: 'SecondaryButtonWidget',
+            name: 'MainButtonWidget',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
               builder: _i5.buildCoolButtonUseCase,
+            ),
+          ),
+          _i1.WidgetbookLeafComponent(
+            name: 'SecondaryButton',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Default',
+              builder: _i6.buildCoolButtonUseCase,
             ),
           ),
         ],
