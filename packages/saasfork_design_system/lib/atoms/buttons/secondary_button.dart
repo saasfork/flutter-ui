@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:saasfork_design_system/foundations/sizes.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
 
-class MainButton extends StatelessWidget {
+class SecondaryButtonWidget extends StatelessWidget {
   final String label;
   final ComponentSize size;
   final VoidCallback onPressed;
 
-  const MainButton({
+  const SecondaryButtonWidget({
     required this.label,
     required this.onPressed,
     this.size = ComponentSize.md,
@@ -16,7 +16,7 @@ class MainButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return OutlinedButton(
       onPressed: onPressed,
       style: _getButtonStyle(context),
       child: Text(label),
@@ -24,13 +24,14 @@ class MainButton extends StatelessWidget {
   }
 
   ButtonStyle? _getButtonStyle(BuildContext context) {
-    final theme = Theme.of(context).elevatedButtonTheme.style;
+    final theme = Theme.of(context).outlinedButtonTheme.style;
 
     return theme?.copyWith(
       padding: WidgetStateProperty.all(AppSizes.getPadding(size)),
       textStyle: WidgetStateProperty.all(
         AppTypography.getScaledStyle(AppTypography.buttonText, size),
       ),
+      side: WidgetStateProperty.all(BorderSide(color: Colors.grey.shade400)),
     );
   }
 }

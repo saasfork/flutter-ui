@@ -4,8 +4,8 @@ import 'package:saasfork_design_system/saasfork_design_system.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-@widgetbook.UseCase(name: 'Default', type: MainButton)
-Widget buildCoolButtonUseCase(BuildContext context) {
+@widgetbook.UseCase(name: 'Default', type: IconButtonWidget)
+Widget buildIconButtonUseCase(BuildContext context) {
   final label = context.knobs.string(
     label: 'Button Label',
     initialValue: 'Action',
@@ -19,5 +19,20 @@ Widget buildCoolButtonUseCase(BuildContext context) {
     description: 'Size of the button',
   );
 
-  return Center(child: MainButton(label: label, size: size, onPressed: () {}));
+  final iconPosition = context.knobs.list<IconPosition>(
+    label: 'Icon Position',
+    options: IconPosition.values,
+    initialOption: IconPosition.start,
+    description: 'Position of the icon',
+  );
+
+  return Center(
+    child: IconButtonWidget(
+      label: label,
+      icon: Icons.add,
+      onPressed: () {},
+      size: size,
+      iconPosition: iconPosition,
+    ),
+  );
 }

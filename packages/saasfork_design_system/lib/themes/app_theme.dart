@@ -17,5 +17,18 @@ class AppTheme {
         textStyle: WidgetStateProperty.all(AppTypography.buttonText),
       ),
     ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        foregroundColor: WidgetStateProperty.all(Colors.black),
+        backgroundColor: WidgetStateProperty.all(Colors.white),
+        padding: WidgetStateProperty.all(AppSizes.getPadding(ComponentSize.md)),
+        textStyle: WidgetStateProperty.all(AppTypography.buttonText),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSpacing.sm),
+          ),
+        ),
+      ),
+    ),
   );
 }
