@@ -8,7 +8,7 @@ class SFLoginForm extends StatelessWidget {
   const SFLoginForm({
     super.key,
     this.size = ComponentSize.md,
-    this.spacing = AppSpacing.md,
+    this.spacing = AppSpacing.sm,
   });
 
   @override
