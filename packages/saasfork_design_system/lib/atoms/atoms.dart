@@ -11,3 +11,4 @@ export './buttons/secondary_button.dart';
 
 // Inputs - Différents types d'inputs disponibles
 export './inputs/text_field.dart';
+export './inputs/password_field.dart';

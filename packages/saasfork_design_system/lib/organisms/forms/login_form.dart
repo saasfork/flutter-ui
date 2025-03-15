@@ -19,13 +19,15 @@ class SFLoginForm extends StatelessWidget {
       spacing: spacing,
       children: [
         SFFormfield(
-          label: 'Username',
-          input: SFTextField(placeholder: 'Enter your username', size: size),
-          hintMessage: 'Please provide your username',
+          label: 'Email',
+          input: SFTextField(placeholder: 'Enter your email', size: size),
         ),
         SFFormfield(
           label: 'Password',
-          input: SFTextField(placeholder: 'Enter your password', size: size),
+          input: SFPasswordField(
+            placeholder: 'Enter your password',
+            size: size,
+          ),
         ),
         SFMainButton(
           label: 'Login',

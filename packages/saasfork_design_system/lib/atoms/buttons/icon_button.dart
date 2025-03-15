@@ -35,7 +35,7 @@ class SFIconButton extends StatelessWidget {
     final iconWidget = Icon(
       icon,
       color: iconColor ?? Colors.white,
-      size: _getIconSize(),
+      size: AppSizes.getIconSize(size),
     );
 
     if (label == null) {
@@ -108,21 +108,6 @@ class SFIconButton extends StatelessWidget {
         return const Size(40, 40);
       case ComponentSize.xl:
         return const Size(48, 48);
-    }
-  }
-
-  double _getIconSize() {
-    switch (size) {
-      case ComponentSize.xs:
-        return 12.0;
-      case ComponentSize.sm:
-        return 16.0;
-      case ComponentSize.md:
-        return 18.0;
-      case ComponentSize.lg:
-        return 20.0;
-      case ComponentSize.xl:
-        return 22.0;
     }
   }
 }

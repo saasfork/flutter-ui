@@ -85,4 +85,20 @@ class AppSizes {
         return BoxConstraints.tightFor(height: padding.vertical * 2 - 14);
     }
   }
+
+  /// Retourne la taille de l'icône selon la taille du composant
+  static double getIconSize(ComponentSize size) {
+    switch (size) {
+      case ComponentSize.xs:
+        return 12.0;
+      case ComponentSize.sm:
+        return 16.0;
+      case ComponentSize.md:
+        return 18.0;
+      case ComponentSize.lg:
+        return 20.0;
+      case ComponentSize.xl:
+        return 22.0;
+    }
+  }
 }
