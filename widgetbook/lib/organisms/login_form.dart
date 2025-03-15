@@ -44,11 +44,23 @@ class _LoginFormUseCaseState extends State<LoginFormUseCase> {
             },
           ),
 
-          // render values
           if (values.isNotEmpty)
-            Text(
-              'Submitted Values: ${JsonEncoder.withIndent('  ').convert(values)}',
-              style: TextStyle(fontSize: 22),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Submitted Values:',
+                  style: TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  JsonEncoder.withIndent('  ').convert(values),
+                  style: TextStyle(fontFamily: 'monospace', fontSize: 14),
+                ),
+              ],
             ),
         ],
       ),
