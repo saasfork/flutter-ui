@@ -30,7 +30,10 @@ class SFFormfield extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
-            color: errorMessage != null ? AppColors.red.s400 : null,
+            color:
+                errorMessage != null && errorMessage!.isNotEmpty
+                    ? AppColors.red.s400
+                    : Theme.of(context).textTheme.bodyLarge?.color,
           ),
         ),
         input,
@@ -39,7 +42,9 @@ class SFFormfield extends StatelessWidget {
           style: TextStyle(
             fontStyle: FontStyle.italic,
             color:
-                errorMessage != null ? AppColors.red.s400 : AppColors.gray.s400,
+                errorMessage != null && errorMessage!.isNotEmpty
+                    ? AppColors.red.s400
+                    : AppColors.gray.s400,
           ),
         ),
       ],
