@@ -1,19 +1,11 @@
-// Atom
-export 'atoms/buttons/main_button.dart';
-export 'atoms/buttons/secondary_button.dart';
-export 'atoms/buttons/circular_button.dart';
-export 'atoms/buttons/icon_button.dart';
-export 'atoms/buttons/link_button.dart';
-
-export 'atoms/inputs/text_field.dart';
+// Atoms
+export 'atoms/atoms.dart';
 
 // Molecules
-export 'molecules/forms/form_field.dart'; // assuming you want to export card molecules, adjust as necessary
+export 'molecules/molecules.dart';
 
 // Foundation
-export 'foundations/colors.dart';
-export 'foundations/spacing.dart';
-export 'foundations/typography.dart';
+export 'foundations/foundations.dart';
 
 // Theme
 export 'themes/app_theme.dart';
