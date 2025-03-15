@@ -5,11 +5,13 @@ class SFPasswordField extends StatefulWidget {
   final String placeholder;
   final bool? isInError;
   final ComponentSize size;
+  final TextEditingController controller;
 
   const SFPasswordField({
     required this.placeholder,
     this.isInError = false,
     this.size = ComponentSize.md,
+    required this.controller,
     super.key,
   });
 
@@ -34,6 +36,7 @@ class _SFPasswordFieldState extends State<SFPasswordField> {
     );
 
     return TextField(
+      controller: widget.controller,
       obscureText: _obscureText,
       style: AppTypography.getScaledStyle(AppTypography.bodyLarge, widget.size),
       decoration: InputDecoration(
@@ -61,9 +64,7 @@ class _SFPasswordFieldState extends State<SFPasswordField> {
             color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
             size: AppSizes.getIconSize(widget.size),
           ),
-          onPressed: () {
-            setState(() => _obscureText = !_obscureText);
-          },
+          onPressed: () => setState(() => _obscureText = !_obscureText),
         ),
       ),
     );

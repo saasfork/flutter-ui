@@ -5,11 +5,13 @@ class SFTextField extends StatelessWidget {
   final String placeholder;
   final bool? isInError;
   final ComponentSize size;
+  final TextEditingController? controller;
 
   const SFTextField({
     required this.placeholder,
     this.isInError = false,
     this.size = ComponentSize.md,
+    this.controller,
     super.key,
   });
 
@@ -27,6 +29,7 @@ class SFTextField extends StatelessWidget {
     );
 
     return TextField(
+      controller: controller,
       style: AppTypography.getScaledStyle(AppTypography.bodyLarge, size),
       decoration: InputDecoration(
         hintText: placeholder,
