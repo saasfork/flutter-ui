@@ -4,3 +4,4 @@ library;
 
 // Inputs
 export './forms/login_form.dart';
+export './forms/register_form.dart';

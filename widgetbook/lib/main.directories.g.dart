@@ -21,6 +21,7 @@ import 'package:widgetbook_workspace/atoms/inputs/text_field.dart' as _i7;
 import 'package:widgetbook_workspace/foundations/typography.dart' as _i8;
 import 'package:widgetbook_workspace/molecules/forms/form_field.dart' as _i9;
 import 'package:widgetbook_workspace/organisms/login_form.dart' as _i10;
+import 'package:widgetbook_workspace/organisms/register_form.dart' as _i11;
 
 final directories = <_i1.WidgetbookNode>[
   _i1.WidgetbookFolder(
@@ -54,14 +55,14 @@ final directories = <_i1.WidgetbookNode>[
             name: 'SFMainButton',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i5.buildCoolButtonUseCase,
+              builder: _i5.buildMainButtonUseCase,
             ),
           ),
           _i1.WidgetbookLeafComponent(
             name: 'SFSecondaryButton',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i6.buildCoolButtonUseCase,
+              builder: _i6.buildSecondaryButtonUseCase,
             ),
           ),
         ],
@@ -119,7 +120,14 @@ final directories = <_i1.WidgetbookNode>[
             name: 'SFLoginForm',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i10.buildCoolButtonUseCase,
+              builder: _i10.buildLoginFormUseCase,
+            ),
+          ),
+          _i1.WidgetbookLeafComponent(
+            name: 'SFRegisterForm',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Default',
+              builder: _i11.buildRegisterFormUseCase,
             ),
           ),
         ],

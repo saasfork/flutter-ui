@@ -5,19 +5,19 @@ import 'package:saasfork_design_system/saasfork_design_system.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-@widgetbook.UseCase(name: 'Default', type: SFLoginForm)
-Widget buildLoginFormUseCase(BuildContext context) {
-  return LoginFormUseCase();
+@widgetbook.UseCase(name: 'Default', type: SFRegisterForm)
+Widget buildRegisterFormUseCase(BuildContext context) {
+  return RegisterFormUseCase();
 }
 
-class LoginFormUseCase extends StatefulWidget {
-  const LoginFormUseCase({super.key});
+class RegisterFormUseCase extends StatefulWidget {
+  const RegisterFormUseCase({super.key});
 
   @override
-  State<LoginFormUseCase> createState() => _LoginFormUseCaseState();
+  State<RegisterFormUseCase> createState() => _RegisterFormUseCaseState();
 }
 
-class _LoginFormUseCaseState extends State<LoginFormUseCase> {
+class _RegisterFormUseCaseState extends State<RegisterFormUseCase> {
   Map<String, dynamic> values = {};
 
   @override
@@ -35,7 +35,7 @@ class _LoginFormUseCaseState extends State<LoginFormUseCase> {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 12,
         children: [
-          SFLoginForm(
+          SFRegisterForm(
             size: size,
             onSubmit: (value) {
               setState(() {
