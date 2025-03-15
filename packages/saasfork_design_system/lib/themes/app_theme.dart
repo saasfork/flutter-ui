@@ -25,7 +25,7 @@ class AppTheme {
           side: side ?? BorderSide.none,
         ),
       ),
-      textStyle: WidgetStateProperty.all(AppTypography.buttonText),
+      textStyle: WidgetStateProperty.all(AppTypography.labelLarge),
     );
   }
 
@@ -38,7 +38,7 @@ class AppTheme {
       foregroundColor: WidgetStateProperty.all(foregroundColor),
       backgroundColor: WidgetStateProperty.all(backgroundColor),
       padding: WidgetStateProperty.all(AppSizes.getPadding(ComponentSize.md)),
-      textStyle: WidgetStateProperty.all(AppTypography.buttonText),
+      textStyle: WidgetStateProperty.all(AppTypography.labelLarge),
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSpacing.sm),
@@ -61,7 +61,7 @@ class AppTheme {
       contentPadding: AppSizes.getPadding(ComponentSize.md),
       hoverColor: Colors.transparent,
       hintStyle: AppTypography.getScaledStyle(
-        AppTypography.bodyText,
+        AppTypography.bodyLarge,
         ComponentSize.md,
       ).copyWith(color: hintColor),
       enabledBorder: _createInputBorder(enabledBorderColor),
@@ -71,9 +71,40 @@ class AppTheme {
     );
   }
 
+  // Nouvelle méthode pour créer un TextTheme basé sur AppTypography
+  static TextTheme _createTextTheme(Color textColor) {
+    return TextTheme(
+      // Styles d'affichage
+      displayLarge: AppTypography.displayLarge.copyWith(color: textColor),
+      displayMedium: AppTypography.displayMedium.copyWith(color: textColor),
+      displaySmall: AppTypography.displaySmall.copyWith(color: textColor),
+
+      // Styles de titres
+      headlineLarge: AppTypography.headlineLarge.copyWith(color: textColor),
+      headlineMedium: AppTypography.headlineMedium.copyWith(color: textColor),
+      headlineSmall: AppTypography.headlineSmall.copyWith(color: textColor),
+
+      // Styles de titres d'éléments
+      titleLarge: AppTypography.titleLarge.copyWith(color: textColor),
+      titleMedium: AppTypography.titleMedium.copyWith(color: textColor),
+      titleSmall: AppTypography.titleSmall.copyWith(color: textColor),
+
+      // Styles de corps de texte
+      bodyLarge: AppTypography.bodyLarge.copyWith(color: textColor),
+      bodyMedium: AppTypography.bodyMedium.copyWith(color: textColor),
+      bodySmall: AppTypography.bodySmall.copyWith(color: textColor),
+
+      // Styles d'étiquettes
+      labelLarge: AppTypography.labelLarge.copyWith(color: textColor),
+      labelMedium: AppTypography.labelMedium.copyWith(color: textColor),
+      labelSmall: AppTypography.labelSmall.copyWith(color: textColor),
+    );
+  }
+
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
+    textTheme: _createTextTheme(AppColors.grey.s800),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: _createElevatedButtonStyle(
         backgroundColor: AppColors.indigo,
@@ -91,7 +122,7 @@ class AppTheme {
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         padding: WidgetStateProperty.all(AppSizes.getPadding(ComponentSize.md)),
-        textStyle: WidgetStateProperty.all(AppTypography.buttonText),
+        textStyle: WidgetStateProperty.all(AppTypography.labelLarge),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.hovered)) {
             return AppColors.gray.s900;
@@ -121,6 +152,7 @@ class AppTheme {
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     scaffoldBackgroundColor: AppColors.grey.s900,
+    textTheme: _createTextTheme(AppColors.grey.s50),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: _createElevatedButtonStyle(
         backgroundColor: AppColors.indigo.s400,
@@ -137,7 +169,7 @@ class AppTheme {
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         padding: WidgetStateProperty.all(AppSizes.getPadding(ComponentSize.md)),
-        textStyle: WidgetStateProperty.all(AppTypography.buttonText),
+        textStyle: WidgetStateProperty.all(AppTypography.labelLarge),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.hovered)) {
             return AppColors.gray.s50;

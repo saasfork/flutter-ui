@@ -30,7 +30,7 @@ class SFSecondaryButton extends StatelessWidget {
     return theme?.copyWith(
       padding: WidgetStateProperty.all(AppSizes.getPadding(size)),
       textStyle: WidgetStateProperty.all(
-        AppTypography.getScaledStyle(AppTypography.buttonText, size),
+        AppTypography.getScaledStyle(AppTypography.labelLarge, size),
       ),
       side: WidgetStateProperty.all(
         isDarkMode ? BorderSide.none : BorderSide(color: Colors.grey.shade400),

@@ -18,7 +18,8 @@ import 'package:widgetbook_workspace/atoms/buttons/main_button.dart' as _i5;
 import 'package:widgetbook_workspace/atoms/buttons/secondary_button.dart'
     as _i6;
 import 'package:widgetbook_workspace/atoms/inputs/text_field.dart' as _i7;
-import 'package:widgetbook_workspace/molecules/forms/form_field.dart' as _i8;
+import 'package:widgetbook_workspace/foundations/typography.dart' as _i8;
+import 'package:widgetbook_workspace/molecules/forms/form_field.dart' as _i9;
 
 final directories = <_i1.WidgetbookNode>[
   _i1.WidgetbookFolder(
@@ -28,35 +29,35 @@ final directories = <_i1.WidgetbookNode>[
         name: 'buttons',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'CircularButtonWidget',
+            name: 'SFCircularButton',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
               builder: _i2.buildCircularButtonUseCase,
             ),
           ),
           _i1.WidgetbookLeafComponent(
-            name: 'IconButtonWidget',
+            name: 'SFIconButton',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
               builder: _i3.buildIconButtonUseCase,
             ),
           ),
           _i1.WidgetbookLeafComponent(
-            name: 'LinkButtonWidget',
+            name: 'SFLinkButton',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
               builder: _i4.buildLinkButtonUseCase,
             ),
           ),
           _i1.WidgetbookLeafComponent(
-            name: 'MainButtonWidget',
+            name: 'SFMainButton',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
               builder: _i5.buildCoolButtonUseCase,
             ),
           ),
           _i1.WidgetbookLeafComponent(
-            name: 'SecondaryButton',
+            name: 'SFSecondaryButton',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
               builder: _i6.buildCoolButtonUseCase,
@@ -68,13 +69,25 @@ final directories = <_i1.WidgetbookNode>[
         name: 'inputs',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'TextFieldWidget',
+            name: 'SFTextField',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
               builder: _i7.buildTextFieldUseCase,
             ),
           ),
         ],
+      ),
+    ],
+  ),
+  _i1.WidgetbookFolder(
+    name: 'foundations',
+    children: [
+      _i1.WidgetbookLeafComponent(
+        name: 'GenericUseCase',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'Typography Showcase',
+          builder: _i8.buildTypographyUseCase,
+        ),
       ),
     ],
   ),
@@ -88,7 +101,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'SFFormfield',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i8.buildFormFieldUseCase,
+              builder: _i9.buildFormFieldUseCase,
             ),
           ),
         ],

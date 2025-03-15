@@ -44,7 +44,7 @@ class SFIconButton extends StatelessWidget {
 
     final textWidget = Text(
       label!,
-      style: AppTypography.getScaledStyle(AppTypography.buttonText, size),
+      style: AppTypography.getScaledStyle(AppTypography.labelLarge, size),
     );
 
     return Row(
