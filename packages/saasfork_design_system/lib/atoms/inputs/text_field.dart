@@ -3,11 +3,11 @@ import 'package:saasfork_design_system/saasfork_design_system.dart';
 
 class SFTextField extends StatelessWidget {
   final String placeholder;
-  final bool isInError;
+  final bool? isInError;
 
   const SFTextField({
     required this.placeholder,
-    required this.isInError,
+    this.isInError = false,
     super.key,
   });
 
@@ -27,13 +27,13 @@ class SFTextField extends StatelessWidget {
     return TextField(
       decoration: InputDecoration(
         hintText: placeholder,
-        hintStyle: isInError ? errorHintStyle : inputTheme.hintStyle,
+        hintStyle: isInError == true ? errorHintStyle : inputTheme.hintStyle,
         enabledBorder:
-            isInError
+            isInError == true
                 ? theme.inputDecorationTheme.errorBorder
                 : theme.inputDecorationTheme.enabledBorder,
         focusedBorder:
-            isInError
+            isInError == true
                 ? theme.inputDecorationTheme.focusedErrorBorder
                 : theme.inputDecorationTheme.focusedBorder,
       ),
