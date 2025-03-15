@@ -53,15 +53,15 @@ class AppTheme {
     required Color enabledBorderColor,
     required Color focusedBorderColor,
     required Color errorBorderColor,
+    ComponentSize size = ComponentSize.md,
   }) {
     return InputDecorationTheme(
       filled: true,
       fillColor: fillColor,
-      contentPadding: AppSizes.getPadding(ComponentSize.md),
       hoverColor: Colors.transparent,
       hintStyle: AppTypography.getScaledStyle(
         AppTypography.bodyLarge,
-        ComponentSize.md,
+        size,
       ).copyWith(color: hintColor),
       enabledBorder: _createInputBorder(enabledBorderColor),
       focusedBorder: _createInputBorder(focusedBorderColor),

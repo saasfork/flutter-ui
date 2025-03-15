@@ -4,10 +4,12 @@ import 'package:saasfork_design_system/saasfork_design_system.dart';
 class SFTextField extends StatelessWidget {
   final String placeholder;
   final bool? isInError;
+  final ComponentSize size;
 
   const SFTextField({
     required this.placeholder,
     this.isInError = false,
+    this.size = ComponentSize.md,
     super.key,
   });
 
@@ -15,8 +17,8 @@ class SFTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final inputTheme = theme.inputDecorationTheme;
+    final inputPadding = AppSizes.getInputPadding(size);
 
-    // Création d'un style de hint pour l'état d'erreur
     final TextStyle? errorHintStyle = inputTheme.hintStyle?.copyWith(
       color:
           inputTheme.errorBorder is OutlineInputBorder
@@ -25,9 +27,18 @@ class SFTextField extends StatelessWidget {
     );
 
     return TextField(
+      style: AppTypography.getScaledStyle(AppTypography.bodyLarge, size),
       decoration: InputDecoration(
         hintText: placeholder,
-        hintStyle: isInError == true ? errorHintStyle : inputTheme.hintStyle,
+        hintStyle:
+            isInError == true
+                ? errorHintStyle
+                : AppTypography.getScaledStyle(
+                  AppTypography.bodyLarge,
+                  size,
+                ).copyWith(color: inputTheme.hintStyle?.color),
+        contentPadding: inputPadding,
+        constraints: AppSizes.getInputConstraints(size),
         enabledBorder:
             isInError == true
                 ? theme.inputDecorationTheme.errorBorder
