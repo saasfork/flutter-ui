@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-class GenericUseCase {}
+class TypographyUseCase {}
 
-@widgetbook.UseCase(name: 'Typography Showcase', type: GenericUseCase)
+@widgetbook.UseCase(name: 'Typography Showcase', type: TypographyUseCase)
 Widget buildTypographyUseCase(BuildContext context) {
   // Construire la liste de tous les styles de typographie
   return Padding(

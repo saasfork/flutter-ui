@@ -94,7 +94,7 @@ class _SFRegisterFormState extends State<SFRegisterForm> {
                   : null,
         ),
         SFMainButton(
-          label: 'Login',
+          label: 'Create account',
           onPressed: () {
             form.markAllAsTouched();
             setState(() {});

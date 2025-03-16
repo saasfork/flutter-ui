@@ -103,6 +103,13 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
+    primaryColor: AppColors.indigo,
+    colorScheme: ColorScheme.light(
+      primary: AppColors.indigo,
+      secondary: AppColors.indigo.s400,
+      surface: Colors.white,
+      error: AppColors.red.s500,
+    ),
     textTheme: _createTextTheme(AppColors.grey.s800),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: _createElevatedButtonStyle(
@@ -135,9 +142,9 @@ class AppTheme {
       ),
     ),
     textSelectionTheme: TextSelectionThemeData(
-      cursorColor: AppColors.indigo.s400, // Couleur du curseur
-      selectionColor: AppColors.indigo.s400, // Sélection de texte
-      selectionHandleColor: AppColors.indigo.s400, // Poignée de sélection
+      cursorColor: AppColors.indigo.s400,
+      selectionColor: AppColors.indigo.s400,
+      selectionHandleColor: AppColors.indigo.s400,
     ),
     inputDecorationTheme: _createInputDecorationTheme(
       fillColor: Colors.white,
@@ -151,6 +158,13 @@ class AppTheme {
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     scaffoldBackgroundColor: AppColors.grey.s900,
+    primaryColor: AppColors.indigo.s400,
+    colorScheme: ColorScheme.dark(
+      primary: AppColors.indigo.s200,
+      secondary: AppColors.indigo.s300,
+      surface: AppColors.grey.s800,
+      error: AppColors.red.s300,
+    ),
     textTheme: _createTextTheme(AppColors.grey.s50),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: _createElevatedButtonStyle(

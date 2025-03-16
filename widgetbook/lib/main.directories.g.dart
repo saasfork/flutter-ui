@@ -24,6 +24,7 @@ import 'package:widgetbook_workspace/organisms/Forgot_password_form.dart'
     as _i10;
 import 'package:widgetbook_workspace/organisms/login_form.dart' as _i11;
 import 'package:widgetbook_workspace/organisms/register_form.dart' as _i12;
+import 'package:widgetbook_workspace/views/auth_view.dart' as _i13;
 
 final directories = <_i1.WidgetbookNode>[
   _i1.WidgetbookFolder(
@@ -87,7 +88,7 @@ final directories = <_i1.WidgetbookNode>[
     name: 'foundations',
     children: [
       _i1.WidgetbookLeafComponent(
-        name: 'GenericUseCase',
+        name: 'TypographyUseCase',
         useCase: _i1.WidgetbookUseCase(
           name: 'Typography Showcase',
           builder: _i8.buildTypographyUseCase,
@@ -140,6 +141,18 @@ final directories = <_i1.WidgetbookNode>[
             ),
           ),
         ],
+      ),
+    ],
+  ),
+  _i1.WidgetbookFolder(
+    name: 'views',
+    children: [
+      _i1.WidgetbookLeafComponent(
+        name: 'SFAuthView',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'Default',
+          builder: _i13.buildAuthViewUseCase,
+        ),
       ),
     ],
   ),
