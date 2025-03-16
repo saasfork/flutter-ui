@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:saasfork_design_system/foundations/sizes.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
 
 class SFLinkButton extends StatelessWidget {
@@ -26,7 +25,6 @@ class SFLinkButton extends StatelessWidget {
   ButtonStyle? _getButtonStyle(BuildContext context) {
     final theme = Theme.of(context).textButtonTheme.style;
 
-    // Utiliser uniquement le style du thème avec des ajustements pour la taille
     return theme?.copyWith(
       padding: WidgetStateProperty.all(AppSizes.getPadding(size)),
       textStyle: WidgetStateProperty.all(

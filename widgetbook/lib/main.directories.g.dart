@@ -20,7 +20,7 @@ import 'package:widgetbook_workspace/atoms/buttons/secondary_button.dart'
 import 'package:widgetbook_workspace/atoms/inputs/text_field.dart' as _i7;
 import 'package:widgetbook_workspace/foundations/typography.dart' as _i8;
 import 'package:widgetbook_workspace/molecules/forms/form_field.dart' as _i9;
-import 'package:widgetbook_workspace/organisms/Forgot_password_form.dart'
+import 'package:widgetbook_workspace/organisms/forgot_password_form.dart'
     as _i10;
 import 'package:widgetbook_workspace/organisms/login_form.dart' as _i11;
 import 'package:widgetbook_workspace/organisms/register_form.dart' as _i12;

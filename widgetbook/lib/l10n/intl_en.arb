@@ -1,0 +1,14 @@
+{
+  "login_button": "Login",
+  "label_email": "Email",
+  "placeholder_email": "Enter your email",
+  "label_password": "Password",
+  "placeholder_password": "Enter your password",
+  "error_email_invalid": "Please enter a valid email.",
+  "error_password_length": "Password must be at least 6 characters long.",
+  "auth_not_account_text": "Don't have an account yet? ",
+  "auth_not_account_link": "Create an account",
+  "auth_already_exists_text": "Already have an account? ",
+  "auth_already_exists_link": "Log in",
+  "auth_forgot_password_link": "Forgot password"
+}

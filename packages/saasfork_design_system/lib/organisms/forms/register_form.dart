@@ -5,6 +5,7 @@ import 'package:saasfork_design_system/saasfork_design_system.dart';
 class SFRegisterForm extends StatefulWidget {
   final ComponentSize size;
   final double spacing;
+  final Map<String, dynamic> additionalData;
   final Function(Map<String, dynamic>)? onSubmit;
 
   const SFRegisterForm({
@@ -12,6 +13,15 @@ class SFRegisterForm extends StatefulWidget {
     this.onSubmit,
     this.size = ComponentSize.md,
     this.spacing = AppSpacing.sm,
+    this.additionalData = const {
+      'label_email': 'Email',
+      'placeholder_email': 'Enter your email',
+      'error_email_invalid': 'Please enter a valid email.',
+      'label_password': 'Password',
+      'placeholder_password': 'Enter your password',
+      'error_password_length': 'Password must be at least 6 characters long.',
+      'register_button': 'Create account',
+    },
   });
 
   @override
@@ -60,9 +70,9 @@ class _SFRegisterFormState extends State<SFRegisterForm> {
               .control('email')
               .validators
               .any((validator) => validator == Validators.required),
-          label: 'Email',
+          label: widget.additionalData['label_email'] ?? '',
           input: SFTextField(
-            placeholder: 'Enter your email',
+            placeholder: widget.additionalData['placeholder_email'] ?? '',
             controller: _emailController,
             size: widget.size,
             isInError:
@@ -70,7 +80,7 @@ class _SFRegisterFormState extends State<SFRegisterForm> {
           ),
           errorMessage:
               form.control('email').touched && form.control('email').invalid
-                  ? 'Please enter a valid email.'
+                  ? widget.additionalData['error_email_invalid'] ?? ''
                   : null,
         ),
         SFFormfield(
@@ -78,9 +88,9 @@ class _SFRegisterFormState extends State<SFRegisterForm> {
               .control('password')
               .validators
               .any((validator) => validator == Validators.required),
-          label: 'Password',
+          label: widget.additionalData['label_password'] ?? '',
           input: SFPasswordField(
-            placeholder: 'Enter your password',
+            placeholder: widget.additionalData['placeholder_password'] ?? '',
             controller: _passwordController,
             size: widget.size,
             isInError:
@@ -90,11 +100,11 @@ class _SFRegisterFormState extends State<SFRegisterForm> {
           errorMessage:
               form.control('password').touched &&
                       form.control('password').invalid
-                  ? 'Password must be at least 6 characters long.'
+                  ? widget.additionalData['error_password_length'] ?? ''
                   : null,
         ),
         SFMainButton(
-          label: 'Create account',
+          label: widget.additionalData['register_button'] ?? '',
           onPressed: () {
             form.markAllAsTouched();
             setState(() {});

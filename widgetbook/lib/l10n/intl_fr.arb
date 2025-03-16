@@ -1,0 +1,14 @@
+{
+    "login_button": "Connexion",
+    "label_email": "Email",
+    "placeholder_email": "Entrez votre email",
+    "label_password": "Mot de passe",
+    "placeholder_password": "Entrez votre mot de passe",
+    "error_email_invalid": "Veuillez entrer un email valide.",
+    "error_password_length": "Le mot de passe doit comporter au moins 6 caractères.",
+    "auth_not_account_text": "Pas encore de compte ? ",
+    "auth_not_account_link": "Créez un compte",
+    "auth_already_exists_text": "Vous avez déjà un compte ? ",
+    "auth_already_exists_link": "Connectez-vous",
+    "auth_forgot_password_link": "Mot de passe oublié"
+}
