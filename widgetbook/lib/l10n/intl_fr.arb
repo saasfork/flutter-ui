@@ -1,5 +1,7 @@
 {
     "login_button": "Connexion",
+    "register_button": "S'inscrire",
+    "forgot_password_button": "Mot de passe oublié",
     "label_email": "Email",
     "placeholder_email": "Entrez votre email",
     "label_password": "Mot de passe",

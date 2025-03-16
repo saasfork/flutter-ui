@@ -1,5 +1,7 @@
 {
   "login_button": "Login",
+  "register_button": "Register",
+  "forgot_password_button": "Forgot password",
   "label_email": "Email",
   "placeholder_email": "Enter your email",
   "label_password": "Password",

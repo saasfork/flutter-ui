@@ -4,8 +4,17 @@ import 'package:saasfork_design_system/saasfork_design_system.dart';
 
 class SFAuthView extends StatefulWidget {
   final Map<String, dynamic> additionalData;
+  final Function(Map<String, dynamic>)? onLogin;
+  final Function(Map<String, dynamic>)? onRegister;
+  final Function(Map<String, dynamic>)? onForgotPassword;
 
-  const SFAuthView({super.key, this.additionalData = const {}});
+  const SFAuthView({
+    super.key,
+    this.additionalData = const {},
+    this.onLogin,
+    this.onRegister,
+    this.onForgotPassword,
+  });
 
   @override
   State<SFAuthView> createState() => SFAuthViewState();
@@ -21,6 +30,8 @@ class SFAuthViewState extends State<SFAuthView> {
     'placeholder_password': 'Enter your password',
     'error_password_length': 'Password must be at least 6 characters.',
     'login_button': 'Login',
+    'register_button': 'Register',
+    'forgot_password_button': 'Forgot password',
     'auth_not_account': {
       'text': 'Don\'t have an account yet? ',
       'link': 'Create an account',
@@ -48,7 +59,7 @@ class SFAuthViewState extends State<SFAuthView> {
     super.dispose();
   }
 
-  Widget _richText({String? text, required String link, Function? onTap}) {
+  RichText _richText({String? text, required String link, Function? onTap}) {
     return RichText(
       text: TextSpan(
         style: Theme.of(context).textTheme.bodyMedium,
@@ -78,7 +89,10 @@ class SFAuthViewState extends State<SFAuthView> {
         Column(
           spacing: AppSpacing.md,
           children: [
-            SFLoginForm(additionalData: additionalData),
+            SFLoginForm(
+              additionalData: additionalData,
+              onSubmit: widget.onLogin,
+            ),
             _richText(
               text:
                   additionalData['auth_not_account']?['text'] ??
@@ -103,7 +117,10 @@ class SFAuthViewState extends State<SFAuthView> {
         Column(
           spacing: AppSpacing.md,
           children: [
-            SFRegisterForm(additionalData: additionalData),
+            SFRegisterForm(
+              additionalData: additionalData,
+              onSubmit: widget.onRegister,
+            ),
             _richText(
               text: additionalData['auth_already_exists']?['text'],
               link: additionalData['auth_already_exists']?['link'],
@@ -116,7 +133,10 @@ class SFAuthViewState extends State<SFAuthView> {
         Column(
           spacing: AppSpacing.md,
           children: [
-            SFForgotPasswordForm(additionalData: additionalData),
+            SFForgotPasswordForm(
+              additionalData: additionalData,
+              onSubmit: widget.onForgotPassword,
+            ),
             _richText(
               text: additionalData['auth_already_exists']?['text'],
               link: additionalData['auth_already_exists']?['link'],

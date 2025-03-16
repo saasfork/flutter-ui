@@ -17,7 +17,7 @@ class SFForgotPasswordForm extends StatefulWidget {
       'label_email': 'Email',
       'placeholder_email': 'Enter your email',
       'error_email_invalid': 'Please enter a valid email.',
-      'submit_button': 'Submit',
+      'forgot_password_button': 'Submit',
     },
   });
 
@@ -70,7 +70,7 @@ class _SFForgotPasswordFormState extends State<SFForgotPasswordForm> {
                   : null,
         ),
         SFMainButton(
-          label: widget.additionalData['submit_button'] ?? '',
+          label: widget.additionalData['forgot_password_button'] ?? '',
           onPressed: () {
             form.markAllAsTouched();
             setState(() {});
