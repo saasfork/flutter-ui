@@ -20,8 +20,10 @@ import 'package:widgetbook_workspace/atoms/buttons/secondary_button.dart'
 import 'package:widgetbook_workspace/atoms/inputs/text_field.dart' as _i7;
 import 'package:widgetbook_workspace/foundations/typography.dart' as _i8;
 import 'package:widgetbook_workspace/molecules/forms/form_field.dart' as _i9;
-import 'package:widgetbook_workspace/organisms/login_form.dart' as _i10;
-import 'package:widgetbook_workspace/organisms/register_form.dart' as _i11;
+import 'package:widgetbook_workspace/organisms/Forgot_password_form.dart'
+    as _i10;
+import 'package:widgetbook_workspace/organisms/login_form.dart' as _i11;
+import 'package:widgetbook_workspace/organisms/register_form.dart' as _i12;
 
 final directories = <_i1.WidgetbookNode>[
   _i1.WidgetbookFolder(
@@ -117,17 +119,24 @@ final directories = <_i1.WidgetbookNode>[
         name: 'forms',
         children: [
           _i1.WidgetbookLeafComponent(
+            name: 'SFForgotPasswordForm',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Default',
+              builder: _i10.buildForgotPasswordFormUseCase,
+            ),
+          ),
+          _i1.WidgetbookLeafComponent(
             name: 'SFLoginForm',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i10.buildLoginFormUseCase,
+              builder: _i11.buildLoginFormUseCase,
             ),
           ),
           _i1.WidgetbookLeafComponent(
             name: 'SFRegisterForm',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i11.buildRegisterFormUseCase,
+              builder: _i12.buildRegisterFormUseCase,
             ),
           ),
         ],
