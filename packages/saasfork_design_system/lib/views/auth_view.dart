@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
 
 class SFAuthView extends StatefulWidget {
-  final Map<String, dynamic> additionalData;
-  final Function(Map<String, dynamic>)? onLogin;
-  final Function(Map<String, dynamic>)? onRegister;
-  final Function(Map<String, dynamic>)? onForgotPassword;
+  final AuthFormData additionalData;
+  final Function(LoginModel)? onLogin;
+  final Function(RegisterModel)? onRegister;
+  final Function(ForgotPasswordModel)? onForgotPassword;
 
   const SFAuthView({
     super.key,
-    this.additionalData = const {},
+    required this.additionalData,
     this.onLogin,
     this.onRegister,
     this.onForgotPassword,
@@ -22,35 +22,12 @@ class SFAuthView extends StatefulWidget {
 
 class SFAuthViewState extends State<SFAuthView> {
   final PageController _pageController = PageController();
-  final Map<String, dynamic> additionalData = {
-    'label_email': 'E-mail',
-    'placeholder_email': 'Enter your email',
-    'error_email_invalid': 'Invalid email address.',
-    'label_password': 'Password',
-    'placeholder_password': 'Enter your password',
-    'error_password_length': 'Password must be at least 6 characters.',
-    'login_button': 'Login',
-    'register_button': 'Register',
-    'forgot_password_button': 'Forgot password',
-    'auth_not_account': {
-      'text': 'Don\'t have an account yet? ',
-      'link': 'Create an account',
-    },
-    'auth_forgot_password': {'link': 'Forgot password'},
-    'auth_already_exists': {
-      'text': 'Already have an account? ',
-      'link': 'Login',
-    },
-  };
+  late AuthFormData formData;
 
   @override
   void initState() {
     super.initState();
-
-    // merge additionalData with widget.additionalData
-    if (widget.additionalData.isNotEmpty) {
-      additionalData.addAll(widget.additionalData);
-    }
+    formData = widget.additionalData;
   }
 
   @override
@@ -90,24 +67,25 @@ class SFAuthViewState extends State<SFAuthView> {
           spacing: AppSpacing.md,
           children: [
             SFLoginForm(
-              additionalData: additionalData,
-              onSubmit: widget.onLogin,
+              additionalData: formData.toMap(),
+              onSubmit:
+                  widget.onLogin != null
+                      ? (loginData) {
+                        final typedValues = LoginModel.fromMap(loginData);
+                        widget.onLogin!(typedValues);
+                      }
+                      : null,
             ),
             _richText(
               text:
-                  additionalData['auth_not_account']?['text'] ??
-                  'Don\'t have an account yet?',
-              link:
-                  additionalData['auth_not_account']?['link'] ??
-                  'Create an account',
+                  formData.authNotAccount.text ?? 'Don\'t have an account yet?',
+              link: formData.authNotAccount.link,
               onTap: () {
                 _pageController.jumpToPage(1);
               },
             ),
             _richText(
-              link:
-                  additionalData['auth_forgot_password']?['link'] ??
-                  'Forgot password',
+              link: formData.authForgotPassword.link,
               onTap: () {
                 _pageController.jumpToPage(2);
               },
@@ -118,12 +96,18 @@ class SFAuthViewState extends State<SFAuthView> {
           spacing: AppSpacing.md,
           children: [
             SFRegisterForm(
-              additionalData: additionalData,
-              onSubmit: widget.onRegister,
+              additionalData: formData.toMap(),
+              onSubmit:
+                  widget.onRegister != null
+                      ? (registerData) {
+                        final typedValues = RegisterModel.fromMap(registerData);
+                        widget.onRegister!(typedValues);
+                      }
+                      : null,
             ),
             _richText(
-              text: additionalData['auth_already_exists']?['text'],
-              link: additionalData['auth_already_exists']?['link'],
+              text: formData.authAlreadyExists.text,
+              link: formData.authAlreadyExists.link,
               onTap: () {
                 _pageController.jumpToPage(0);
               },
@@ -134,12 +118,20 @@ class SFAuthViewState extends State<SFAuthView> {
           spacing: AppSpacing.md,
           children: [
             SFForgotPasswordForm(
-              additionalData: additionalData,
-              onSubmit: widget.onForgotPassword,
+              additionalData: formData.toMap(),
+              onSubmit:
+                  widget.onForgotPassword != null
+                      ? (forgotPasswordData) {
+                        final typedValues = ForgotPasswordModel.fromMap(
+                          forgotPasswordData,
+                        );
+                        widget.onForgotPassword!(typedValues);
+                      }
+                      : null,
             ),
             _richText(
-              text: additionalData['auth_already_exists']?['text'],
-              link: additionalData['auth_already_exists']?['link'],
+              text: formData.authAlreadyExists.text,
+              link: formData.authAlreadyExists.link,
               onTap: () {
                 _pageController.jumpToPage(0);
               },

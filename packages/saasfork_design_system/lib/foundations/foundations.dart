@@ -12,3 +12,7 @@ export './typography.dart';
 // Dimensions - Tailles de composants et espacement
 export './sizes.dart';
 export './spacing.dart';
+
+// Data - Éléments de données standardisés
+export './data/data.dart';
+export './models/models.dart';

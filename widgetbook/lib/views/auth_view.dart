@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:saasfork_design_system/views/views.dart';
+import 'package:saasfork_design_system/saasfork_design_system.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import 'package:widgetbook_workspace/generated/l10n.dart';
 
@@ -22,6 +22,29 @@ class _AuthViewState extends State<AuthView> {
 
   @override
   Widget build(BuildContext context) {
+    final authTextData = AuthFormData(
+      labelEmail: S.current.label_email,
+      placeholderEmail: S.current.placeholder_email,
+      errorEmailInvalid: S.current.error_email_invalid,
+      labelPassword: S.current.label_password,
+      placeholderPassword: S.current.placeholder_password,
+      errorPasswordLength: S.current.error_password_length,
+      loginButton: S.current.login_button,
+      registerButton: S.current.register_button,
+      forgotPasswordButton: S.current.forgot_password_button,
+      authNotAccount: LinkTextPair(
+        text: S.current.auth_not_account_text,
+        link: S.current.auth_not_account_link,
+      ),
+      authForgotPassword: LinkTextPair(
+        link: S.current.auth_forgot_password_link,
+      ),
+      authAlreadyExists: LinkTextPair(
+        text: S.current.auth_already_exists_text,
+        link: S.current.auth_already_exists_link,
+      ),
+    );
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -29,41 +52,20 @@ class _AuthViewState extends State<AuthView> {
         children: [
           Expanded(
             child: SFAuthView(
-              additionalData: {
-                'label_email': S.current.label_email,
-                'placeholder_email': S.current.placeholder_email,
-                'error_email_invalid': S.current.error_email_invalid,
-                'label_password': S.current.label_password,
-                'placeholder_password': S.current.placeholder_password,
-                'error_password_length': S.current.error_password_length,
-                'login_button': S.current.login_button,
-                'register_button': S.current.register_button,
-                'forgot_password_button': S.current.forgot_password_button,
-                'auth_not_account': {
-                  'text': S.current.auth_not_account_text,
-                  'link': S.current.auth_not_account_link,
-                },
-                'auth_forgot_password': {
-                  'link': S.current.auth_forgot_password_link,
-                },
-                'auth_already_exists': {
-                  'text': S.current.auth_already_exists_text,
-                  'link': S.current.auth_already_exists_link,
-                },
-              },
-              onLogin: (Map<String, dynamic> loginValues) {
+              additionalData: authTextData,
+              onLogin: (LoginModel loginValues) {
                 setState(() {
-                  values = loginValues;
+                  values = loginValues.toMap();
                 });
               },
-              onRegister: (Map<String, dynamic> registerValues) {
+              onRegister: (RegisterModel registerValues) {
                 setState(() {
-                  values = registerValues;
+                  values = registerValues.toMap();
                 });
               },
-              onForgotPassword: (Map<String, dynamic> registerValues) {
+              onForgotPassword: (ForgotPasswordModel forgotPasswordValues) {
                 setState(() {
-                  values = registerValues;
+                  values = forgotPasswordValues.toMap();
                 });
               },
             ),
