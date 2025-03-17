@@ -19,12 +19,10 @@ jobs:
 
       - name: Install Dependencies
         run:  |
-          cd packages
-          cd saasfork_design_system
+          cd packages/saasfork_design_system
           flutter pub get
 
       - name: Run Tests
         run: |
-          cd packages
-          cd saasfork_design_system
+          cd packages/saasfork_design_system
           flutter test
