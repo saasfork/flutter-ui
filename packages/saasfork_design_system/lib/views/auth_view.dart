@@ -102,9 +102,10 @@ class SFAuthViewState extends State<SFAuthView> {
                 ),
               ],
             ),
-            if (widget.onGithubConnect != null ||
-                widget.onGoogleConnect != null)
-              SFDividerWithText(text: formData.dividerText),
+            if ((widget.onGithubConnect != null ||
+                    widget.onGoogleConnect != null) &&
+                formData.dividerText != null)
+              SFDividerWithText(text: formData.dividerText!),
             if (widget.onGoogleConnect != null)
               SFSecondaryIconButton(
                 icon: FontAwesomeIcons.google,

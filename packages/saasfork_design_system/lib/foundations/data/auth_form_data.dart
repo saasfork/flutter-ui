@@ -23,7 +23,7 @@ class AuthFormData {
   final LinkTextPair authAlreadyExists;
 
   /// Divider text used in the authentication view
-  final String dividerText;
+  final String? dividerText;
 
   const AuthFormData({
     required this.labelEmail,
@@ -38,7 +38,7 @@ class AuthFormData {
     required this.authNotAccount,
     required this.authForgotPassword,
     required this.authAlreadyExists,
-    required this.dividerText,
+    this.dividerText,
   });
 
   /// Convertit les données en Map pour la compatibilité avec le code existant
