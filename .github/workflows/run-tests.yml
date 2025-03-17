@@ -30,4 +30,4 @@ jobs:
         run: |
           cd packages
           cd saasfork_design_system
-          find . -name "test" -type d -exec sh -c 'cd "{}" && flutter test' \;
+          flutter test
