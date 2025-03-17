@@ -20,13 +20,8 @@ jobs:
           flutter-version: 'stable'
           channel: 'stable'
 
-      - name: Setup Melos
-        run: |
-          dart pub global activate melos
-          echo "$(dart pub global bin)" >> $GITHUB_PATH
-
-      - name: Bootstrap Melos
-        run: melos bootstrap
+      - name: Install Dependencies
+        run: flutter pub get
 
       - name: Run Tests
         run: |
