@@ -13,18 +13,22 @@
 import 'package:widgetbook/widgetbook.dart' as _i1;
 import 'package:widgetbook_workspace/atoms/buttons/circular_button.dart' as _i2;
 import 'package:widgetbook_workspace/atoms/buttons/icon_button.dart' as _i3;
+import 'package:widgetbook_workspace/atoms/buttons/icon_secondary_button.dart'
+    as _i7;
 import 'package:widgetbook_workspace/atoms/buttons/link_button.dart' as _i4;
 import 'package:widgetbook_workspace/atoms/buttons/main_button.dart' as _i5;
 import 'package:widgetbook_workspace/atoms/buttons/secondary_button.dart'
     as _i6;
-import 'package:widgetbook_workspace/atoms/inputs/text_field.dart' as _i7;
-import 'package:widgetbook_workspace/foundations/typography.dart' as _i8;
-import 'package:widgetbook_workspace/molecules/forms/form_field.dart' as _i9;
+import 'package:widgetbook_workspace/atoms/dividers/divider_with_text.dart'
+    as _i8;
+import 'package:widgetbook_workspace/atoms/inputs/text_field.dart' as _i9;
+import 'package:widgetbook_workspace/foundations/typography.dart' as _i10;
+import 'package:widgetbook_workspace/molecules/forms/form_field.dart' as _i11;
 import 'package:widgetbook_workspace/organisms/forgot_password_form.dart'
-    as _i10;
-import 'package:widgetbook_workspace/organisms/login_form.dart' as _i11;
-import 'package:widgetbook_workspace/organisms/register_form.dart' as _i12;
-import 'package:widgetbook_workspace/views/auth_view.dart' as _i13;
+    as _i12;
+import 'package:widgetbook_workspace/organisms/login_form.dart' as _i13;
+import 'package:widgetbook_workspace/organisms/register_form.dart' as _i14;
+import 'package:widgetbook_workspace/views/auth_view.dart' as _i15;
 
 final directories = <_i1.WidgetbookNode>[
   _i1.WidgetbookFolder(
@@ -68,6 +72,25 @@ final directories = <_i1.WidgetbookNode>[
               builder: _i6.buildSecondaryButtonUseCase,
             ),
           ),
+          _i1.WidgetbookLeafComponent(
+            name: 'SFSecondaryIconButton',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Default',
+              builder: _i7.buildIconSecondaryButtonUseCase,
+            ),
+          ),
+        ],
+      ),
+      _i1.WidgetbookFolder(
+        name: 'dividers',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'SFDividerWithText',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Default',
+              builder: _i8.buildDividerWithTextUseCase,
+            ),
+          ),
         ],
       ),
       _i1.WidgetbookFolder(
@@ -77,7 +100,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'SFTextField',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i7.buildTextFieldUseCase,
+              builder: _i9.buildTextFieldUseCase,
             ),
           ),
         ],
@@ -91,7 +114,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'TypographyUseCase',
         useCase: _i1.WidgetbookUseCase(
           name: 'Typography Showcase',
-          builder: _i8.buildTypographyUseCase,
+          builder: _i10.buildTypographyUseCase,
         ),
       ),
     ],
@@ -106,7 +129,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'SFFormfield',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i9.buildFormFieldUseCase,
+              builder: _i11.buildFormFieldUseCase,
             ),
           ),
         ],
@@ -123,21 +146,21 @@ final directories = <_i1.WidgetbookNode>[
             name: 'SFForgotPasswordForm',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i10.buildForgotPasswordFormUseCase,
+              builder: _i12.buildForgotPasswordFormUseCase,
             ),
           ),
           _i1.WidgetbookLeafComponent(
             name: 'SFLoginForm',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i11.buildLoginFormUseCase,
+              builder: _i13.buildLoginFormUseCase,
             ),
           ),
           _i1.WidgetbookLeafComponent(
             name: 'SFRegisterForm',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i12.buildRegisterFormUseCase,
+              builder: _i14.buildRegisterFormUseCase,
             ),
           ),
         ],
@@ -151,7 +174,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'SFAuthView',
         useCase: _i1.WidgetbookUseCase(
           name: 'Default',
-          builder: _i13.buildAuthViewUseCase,
+          builder: _i15.buildAuthViewUseCase,
         ),
       ),
     ],

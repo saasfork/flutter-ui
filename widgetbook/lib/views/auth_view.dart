@@ -43,6 +43,7 @@ class _AuthViewState extends State<AuthView> {
         text: S.current.auth_already_exists_text,
         link: S.current.auth_already_exists_link,
       ),
+      dividerText: S.current.auth_form_divider_text,
     );
 
     return Padding(
@@ -68,6 +69,8 @@ class _AuthViewState extends State<AuthView> {
                   values = forgotPasswordValues.toMap();
                 });
               },
+              onGithubConnect: () {},
+              onGoogleConnect: () {},
             ),
           ),
           if (values.isNotEmpty)

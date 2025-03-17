@@ -16,3 +16,5 @@ export './spacing.dart';
 // Data - Éléments de données standardisés
 export './data/data.dart';
 export './models/models.dart';
+
+export './utils.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:saasfork_design_system/saasfork_design_system.dart';
+import 'package:saasfork_design_system/foundations/foundations.dart';
 
-class SFIconButton extends StatelessWidget {
+class SFSecondaryIconButton extends StatelessWidget {
   final IconData icon;
   final ComponentSize size;
   final VoidCallback onPressed;
@@ -9,7 +9,7 @@ class SFIconButton extends StatelessWidget {
   final String? label;
   final IconPosition iconPosition;
 
-  const SFIconButton({
+  const SFSecondaryIconButton({
     required this.icon,
     required this.onPressed,
     this.size = ComponentSize.md,
@@ -21,7 +21,7 @@ class SFIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return OutlinedButton(
       onPressed: onPressed,
       style: _getButtonStyle(context),
       child: _buildButtonContent(context),
@@ -29,9 +29,12 @@ class SFIconButton extends StatelessWidget {
   }
 
   Widget _buildButtonContent(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final defaultIconColor = isDarkMode ? Colors.white : Colors.grey.shade700;
+
     final iconWidget = Icon(
       icon,
-      color: iconColor ?? Colors.white,
+      color: iconColor ?? defaultIconColor,
       size: AppSizes.getIconSize(size),
     );
 
@@ -59,9 +62,12 @@ class SFIconButton extends StatelessWidget {
   }
 
   ButtonStyle? _getButtonStyle(BuildContext context) {
-    final theme = Theme.of(context).elevatedButtonTheme.style;
+    final theme = Theme.of(context).outlinedButtonTheme.style;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return theme?.copyWith(
+      backgroundColor:
+          Theme.of(context).outlinedButtonTheme.style!.backgroundColor,
       padding: WidgetStateProperty.all(_getButtonPadding()),
       minimumSize: WidgetStateProperty.all(
         label != null ? null : _getButtonSize(),
@@ -70,6 +76,9 @@ class SFIconButton extends StatelessWidget {
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSpacing.sm),
         ),
+      ),
+      side: WidgetStateProperty.all(
+        isDarkMode ? BorderSide.none : BorderSide(color: Colors.grey.shade400),
       ),
     );
   }

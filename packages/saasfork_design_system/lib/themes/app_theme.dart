@@ -44,6 +44,15 @@ class AppTheme {
           side: side ?? BorderSide.none,
         ),
       ),
+      overlayColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.hovered)) {
+          return AppColors.gray.s50.withValues(alpha: .3);
+        }
+        if (states.contains(WidgetState.pressed)) {
+          return AppColors.gray.s50;
+        }
+        return null;
+      }),
     );
   }
 
@@ -104,6 +113,7 @@ class AppTheme {
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
     primaryColor: AppColors.indigo,
+    dividerColor: AppColors.grey.s100,
     colorScheme: ColorScheme.light(
       primary: AppColors.indigo,
       secondary: AppColors.indigo.s400,
@@ -159,6 +169,7 @@ class AppTheme {
     brightness: Brightness.dark,
     scaffoldBackgroundColor: AppColors.grey.s900,
     primaryColor: AppColors.indigo.s400,
+    dividerColor: AppColors.grey.s300,
     colorScheme: ColorScheme.dark(
       primary: AppColors.indigo.s200,
       secondary: AppColors.indigo.s300,

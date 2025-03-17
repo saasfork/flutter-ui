@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
 
 class SFAuthView extends StatefulWidget {
@@ -7,6 +8,8 @@ class SFAuthView extends StatefulWidget {
   final Function(LoginModel)? onLogin;
   final Function(RegisterModel)? onRegister;
   final Function(ForgotPasswordModel)? onForgotPassword;
+  final Function? onGoogleConnect;
+  final Function? onGithubConnect;
 
   const SFAuthView({
     super.key,
@@ -14,6 +17,8 @@ class SFAuthView extends StatefulWidget {
     this.onLogin,
     this.onRegister,
     this.onForgotPassword,
+    this.onGoogleConnect,
+    this.onGithubConnect,
   });
 
   @override
@@ -64,6 +69,7 @@ class SFAuthViewState extends State<SFAuthView> {
       physics: NeverScrollableScrollPhysics(),
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           spacing: AppSpacing.md,
           children: [
             SFLoginForm(
@@ -76,20 +82,41 @@ class SFAuthViewState extends State<SFAuthView> {
                       }
                       : null,
             ),
-            _richText(
-              text:
-                  formData.authNotAccount.text ?? 'Don\'t have an account yet?',
-              link: formData.authNotAccount.link,
-              onTap: () {
-                _pageController.jumpToPage(1);
-              },
+            Column(
+              spacing: AppSpacing.xs,
+              children: [
+                _richText(
+                  text:
+                      formData.authNotAccount.text ??
+                      'Don\'t have an account yet?',
+                  link: formData.authNotAccount.link,
+                  onTap: () {
+                    _pageController.jumpToPage(1);
+                  },
+                ),
+                _richText(
+                  link: formData.authForgotPassword.link,
+                  onTap: () {
+                    _pageController.jumpToPage(2);
+                  },
+                ),
+              ],
             ),
-            _richText(
-              link: formData.authForgotPassword.link,
-              onTap: () {
-                _pageController.jumpToPage(2);
-              },
-            ),
+            if (widget.onGithubConnect != null ||
+                widget.onGoogleConnect != null)
+              SFDividerWithText(text: formData.dividerText),
+            if (widget.onGoogleConnect != null)
+              SFSecondaryIconButton(
+                icon: FontAwesomeIcons.google,
+                label: 'Connexion avec Google',
+                onPressed: () => widget.onGoogleConnect!(),
+              ),
+            if (widget.onGithubConnect != null)
+              SFSecondaryIconButton(
+                icon: FontAwesomeIcons.github,
+                label: 'Connexion Github',
+                onPressed: () => widget.onGithubConnect!(),
+              ),
           ],
         ),
         Column(

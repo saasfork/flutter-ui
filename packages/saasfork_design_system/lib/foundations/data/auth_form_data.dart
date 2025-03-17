@@ -22,6 +22,9 @@ class AuthFormData {
   final LinkTextPair authForgotPassword;
   final LinkTextPair authAlreadyExists;
 
+  /// Divider text used in the authentication view
+  final String dividerText;
+
   const AuthFormData({
     required this.labelEmail,
     required this.labelPassword,
@@ -35,6 +38,7 @@ class AuthFormData {
     required this.authNotAccount,
     required this.authForgotPassword,
     required this.authAlreadyExists,
+    required this.dividerText,
   });
 
   /// Convertit les données en Map pour la compatibilité avec le code existant
@@ -52,6 +56,7 @@ class AuthFormData {
       'auth_not_account': authNotAccount.toMap(),
       'auth_forgot_password': authForgotPassword.toMap(),
       'auth_already_exists': authAlreadyExists.toMap(),
+      'divider_text': dividerText,
     };
   }
 }

@@ -12,5 +12,6 @@
     "auth_not_account_link": "Créez un compte",
     "auth_already_exists_text": "Vous avez déjà un compte ? ",
     "auth_already_exists_link": "Connectez-vous",
-    "auth_forgot_password_link": "Mot de passe oublié"
+    "auth_forgot_password_link": "Mot de passe oublié",
+    "auth_form_divider_text": "ou"
 }
