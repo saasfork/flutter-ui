@@ -32,7 +32,7 @@ class MainApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => SFFirebaseAuthProvider(context),
+          create: (context) => SFFirebaseAuthProvider(),
         ),
       ],
       child: RouterInitialize(),

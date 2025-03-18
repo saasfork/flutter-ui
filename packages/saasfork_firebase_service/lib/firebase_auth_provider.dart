@@ -32,7 +32,7 @@ class SFFirebaseAuthProvider extends StateNotifier<UserModel?> {
   /// ```dart
   /// final authProvider = SFFirebaseAuthProvider(context);
   /// ```
-  SFFirebaseAuthProvider(BuildContext context) {
+  SFFirebaseAuthProvider() {
     try {
       FirebaseAuth.instance.authStateChanges().listen((User? user) {
         if (user == null) {
@@ -82,13 +82,25 @@ class SFFirebaseAuthProvider extends StateNotifier<UserModel?> {
         password: password,
       );
 
-      setState(
-        UserModel(
-          uid: userCredential.user!.uid,
-          email: userCredential.user!.email,
-        ),
+      userModel = UserModel(
+        uid: userCredential.user!.uid,
+        email: userCredential.user!.email,
       );
+
+      setState(userModel);
       success = true;
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'user-not-found':
+          error = 'Aucun utilisateur trouvé avec cet email';
+          break;
+        case 'wrong-password':
+          error = 'Mot de passe incorrect';
+          break;
+        // Autres cas spécifiques
+        default:
+          error = e.message ?? e.toString();
+      }
     } catch (e) {
       error = e.toString();
     }
@@ -127,12 +139,11 @@ class SFFirebaseAuthProvider extends StateNotifier<UserModel?> {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
 
-      setState(
-        UserModel(
-          uid: userCredential.user!.uid,
-          email: userCredential.user!.email,
-        ),
+      userModel = UserModel(
+        uid: userCredential.user!.uid,
+        email: userCredential.user!.email,
       );
+      setState(userModel);
       success = true;
     } catch (e) {
       error = e.toString();
@@ -193,4 +204,7 @@ class SFFirebaseAuthProvider extends StateNotifier<UserModel?> {
       debugPrint('Error during sign out: ${e.toString()}');
     }
   }
+
+  /// TODO: Pas de méthode pour réauthentifier l'utilisateur (Modification de profile)
+  /// TODO: Pas de méthode pour changer le mot de passe
 }
