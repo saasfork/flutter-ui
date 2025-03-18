@@ -1,15 +1,10 @@
-import 'package:app/views/login_view.dart';
+import 'package:app/router_initialize.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-// ignore: depend_on_referenced_packages
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:saasfork_design_system/saasfork_design_system.dart';
 import 'package:saasfork_firebase_service/saasfork_firebase_service.dart';
-
-import 'generated/l10n.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,18 +35,7 @@ class MainApp extends StatelessWidget {
           create: (context) => SFFirebaseAuthProvider(context),
         ),
       ],
-      child: MaterialApp(
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        localizationsDelegates: [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        debugShowCheckedModeBanner: false,
-        home: LoginView(),
-      ),
+      child: RouterInitialize(),
     );
   }
 }

@@ -44,6 +44,7 @@ class _LoginViewState extends State<LoginView> {
                 final String email = registerModel.email;
                 final String password = registerModel.password;
                 await firebaseAuthProvider.register(email, password);
+                print('register');
               },
             ),
           ),

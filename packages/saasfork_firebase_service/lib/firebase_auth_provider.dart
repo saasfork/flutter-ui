@@ -2,32 +2,33 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:saasfork_firebase_service/models/auth_result.dart';
 import 'package:saasfork_firebase_service/models/user_model.dart';
+import 'package:saasfork_firebase_service/state_notifier.dart';
 
-/// Service d'authentification Firebase pour SaasFork.
+/// Firebase Authentication service for SaasFork.
 ///
-/// Cette classe gère toutes les opérations d'authentification telles que la connexion,
-/// l'inscription et la récupération de l'utilisateur courant.
+/// This class handles all authentication operations such as login,
+/// registration, and current user retrieval.
 ///
-/// Exemple d'utilisation:
+/// Usage example:
 /// ```dart
 /// final authProvider = SFFirebaseAuthProvider(context);
 ///
-/// // Vérifier si un utilisateur est connecté
+/// // Check if a user is logged in
 /// if (authProvider.currentUser != null) {
-///   print('Utilisateur connecté: ${authProvider.currentUser!.email}');
+///   print('User logged in: ${authProvider.currentUser!.email}');
 /// }
 /// ```
-class SFFirebaseAuthProvider extends ChangeNotifier {
+class SFFirebaseAuthProvider extends StateNotifier<UserModel?> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  /// Utilisateur actuellement authentifié ou null si aucun utilisateur n'est connecté
-  UserModel? currentUser;
+  /// Currently authenticated user or null if no user is logged in
+  UserModel? get currentUser => state;
 
-  /// Crée une instance du service d'authentification et vérifie l'état de connexion actuel.
+  /// Creates an authentication service instance and checks the current login state.
   ///
-  /// Le paramètre [context] est utilisé pour accéder au contexte de l'application.
+  /// The [context] parameter is used to access the application context.
   ///
-  /// Exemple:
+  /// Example:
   /// ```dart
   /// final authProvider = SFFirebaseAuthProvider(context);
   /// ```
@@ -35,37 +36,39 @@ class SFFirebaseAuthProvider extends ChangeNotifier {
     try {
       FirebaseAuth.instance.authStateChanges().listen((User? user) {
         if (user == null) {
-          currentUser = null;
+          resetState();
           return;
         }
 
-        currentUser = UserModel(uid: user.uid, email: user.email);
+        setState(UserModel(uid: user.uid, email: user.email));
       });
     } catch (e) {
-      debugPrint(
-        'Erreur lors de la récupération de l\'utilisateur courant: ${e.toString()}',
-      );
-      currentUser = null;
+      debugPrint('Error retrieving current user: ${e.toString()}');
+      resetState();
     }
-
-    notifyListeners();
   }
 
-  /// Connecte un utilisateur avec son email et son mot de passe.
+  /// Signs in a user with email and password.
   ///
-  /// Retourne un [AuthResultModel] contenant le résultat de l'opération.
+  /// Returns an [AuthResultModel] containing the operation result.
   ///
-  /// Paramètres:
-  /// - [email] : Adresse email de l'utilisateur
-  /// - [password] : Mot de passe de l'utilisateur
+  /// Parameters:
+  /// - [email]: User's email address
+  /// - [password]: User's password
   ///
-  /// Exemple:
+  /// Example:
   /// ```dart
-  /// final result = await authProvider.login('utilisateur@exemple.com', 'motdepasse123');
+  /// final result = await authProvider.login('user@example.com', 'password123');
   /// if (result.success) {
-  ///   print('Connecté avec succès: ${result.user!.email}');
+  ///   print('Successfully logged in: ${result.user!.email}');
   /// } else {
-  ///   print('Erreur de connexion: ${result.error}');
+  ///   print('Login failed: ${result.error}');
+  ///   // Handle specific error cases
+  ///   if (result.error!.contains('user-not-found')) {
+  ///     // Show user not found message
+  ///   } else if (result.error!.contains('wrong-password')) {
+  ///     // Show incorrect password message
+  ///   }
   /// }
   /// ```
   Future<AuthResultModel> login(String email, String password) async {
@@ -79,15 +82,13 @@ class SFFirebaseAuthProvider extends ChangeNotifier {
         password: password,
       );
 
-      userModel = UserModel(
-        uid: userCredential.user!.uid,
-        email: userCredential.user!.email,
+      setState(
+        UserModel(
+          uid: userCredential.user!.uid,
+          email: userCredential.user!.email,
+        ),
       );
-
-      currentUser = userModel;
       success = true;
-
-      notifyListeners();
     } catch (e) {
       error = e.toString();
     }
@@ -95,21 +96,26 @@ class SFFirebaseAuthProvider extends ChangeNotifier {
     return AuthResultModel(success: success, user: userModel, error: error);
   }
 
-  /// Inscrit un nouvel utilisateur avec son email et son mot de passe.
+  /// Registers a new user with email and password.
   ///
-  /// Retourne un [AuthResultModel] contenant le résultat de l'opération.
+  /// Returns an [AuthResultModel] containing the operation result.
   ///
-  /// Paramètres:
-  /// - [email] : Adresse email du nouvel utilisateur
-  /// - [password] : Mot de passe du nouvel utilisateur
+  /// Parameters:
+  /// - [email]: New user's email address
+  /// - [password]: New user's password
   ///
-  /// Exemple:
+  /// Example:
   /// ```dart
-  /// final result = await authProvider.register('nouveau@exemple.com', 'motdepasse123');
+  /// final result = await authProvider.register('newuser@example.com', 'password123');
   /// if (result.success) {
-  ///   print('Compte créé avec succès: ${result.user!.email}');
+  ///   print('Account created successfully: ${result.user!.email}');
+  ///   // Navigate to onboarding or home screen
   /// } else {
-  ///   print('Erreur lors de l\'inscription: ${result.error}');
+  ///   print('Registration error: ${result.error}');
+  ///   // Handle specific errors (e.g., email already in use)
+  ///   if (result.error!.contains('email-already-in-use')) {
+  ///     // Show appropriate message
+  ///   }
   /// }
   /// ```
   Future<AuthResultModel> register(String email, String password) async {
@@ -121,15 +127,13 @@ class SFFirebaseAuthProvider extends ChangeNotifier {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
 
-      userModel = UserModel(
-        uid: userCredential.user!.uid,
-        email: userCredential.user!.email,
+      setState(
+        UserModel(
+          uid: userCredential.user!.uid,
+          email: userCredential.user!.email,
+        ),
       );
-
-      currentUser = userModel;
       success = true;
-
-      notifyListeners();
     } catch (e) {
       error = e.toString();
     }
@@ -137,20 +141,22 @@ class SFFirebaseAuthProvider extends ChangeNotifier {
     return AuthResultModel(success: success, user: userModel, error: error);
   }
 
-  /// Envoie un email de réinitialisation de mot de passe à l'adresse spécifiée.
+  /// Sends a password reset email to the specified address.
   ///
-  /// Retourne un [AuthResultModel] indiquant si l'opération a réussi.
+  /// Returns an [AuthResultModel] indicating whether the operation succeeded.
   ///
-  /// Paramètres:
-  /// - [email] : Adresse email de l'utilisateur souhaitant réinitialiser son mot de passe
+  /// Parameters:
+  /// - [email]: Email address of the user requesting password reset
   ///
-  /// Exemple:
+  /// Example:
   /// ```dart
-  /// final result = await authProvider.resetPassword('utilisateur@exemple.com');
+  /// final result = await authProvider.resetPassword('user@example.com');
   /// if (result.success) {
-  ///   print('Email de réinitialisation envoyé avec succès');
+  ///   print('Password reset email sent successfully');
+  ///   // Show confirmation message to user
   /// } else {
-  ///   print('Erreur lors de l\'envoi de l\'email: ${result.error}');
+  ///   print('Error sending reset email: ${result.error}');
+  ///   // Handle potential errors such as invalid email
   /// }
   /// ```
   Future<AuthResultModel> resetPassword(String email) async {
@@ -167,24 +173,24 @@ class SFFirebaseAuthProvider extends ChangeNotifier {
     return AuthResultModel(success: success, error: error);
   }
 
-  /// Déconnecte l'utilisateur actuellement authentifié.
+  /// Signs out the currently authenticated user.
   ///
-  /// Cette méthode met à jour le [currentUser] à null après déconnexion.
+  /// This method updates [currentUser] to null after logout.
   ///
-  /// Exemple:
+  /// Example:
   /// ```dart
   /// await authProvider.signOut();
-  /// print('Utilisateur déconnecté');
+  /// print('User signed out');
+  /// // Navigate to login screen
+  /// Navigator.of(context).pushReplacementNamed('/login');
   /// ```
   Future<void> signOut() async {
     try {
       await _auth.signOut();
-      currentUser = null;
+      resetState();
     } catch (e) {
-      // Gérer l'erreur silencieusement ou la journaliser
-      debugPrint('Erreur lors de la déconnexion: ${e.toString()}');
+      // Handle the error silently or log it
+      debugPrint('Error during sign out: ${e.toString()}');
     }
-
-    notifyListeners();
   }
 }

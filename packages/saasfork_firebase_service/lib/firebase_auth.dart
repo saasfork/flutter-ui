@@ -1,50 +1,50 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-/// Service d'authentification Firebase pour SaasFork.
+/// Firebase Authentication service for SaasFork.
 ///
-/// Cette classe fournit une méthode pour initialiser Firebase Authentication
-/// avec les configurations nécessaires.
+/// This class provides a method to initialize Firebase Authentication
+/// with the necessary configurations.
 ///
-/// Exemple d'utilisation:
+/// Example usage:
 ///
 /// ```dart
 /// await SFFirebaseAuth.initialize(
-///   apiKey: 'votre-api-key',
-///   authDomain: 'votre-projet.firebaseapp.com',
-///   projectId: 'votre-projet-id',
-///   storageBucket: 'votre-projet.appspot.com',
+///   apiKey: 'your-api-key',
+///   authDomain: 'your-project.firebaseapp.com',
+///   projectId: 'your-project-id',
+///   storageBucket: 'your-project.appspot.com',
 ///   messagingSenderId: '1234567890',
 ///   appId: '1:1234567890:web:abcdef1234567890',
-///   isDev: true, // Utiliser l'émulateur en développement
+///   isDev: true, // Use emulator in development
 /// );
 ///
-/// // Après initialisation, vous pouvez utiliser FirebaseAuth
-/// // Pour se connecter avec un utilisateur:
+/// // After initialization, you can use FirebaseAuth
+/// // To sign in with a user:
 /// await FirebaseAuth.instance.signInWithEmailAndPassword(
 ///   email: 'user@example.com',
 ///   password: 'password123'
 /// );
 /// ```
 class SFFirebaseAuth {
-  /// Initialise Firebase avec les configurations spécifiées.
+  /// Initializes Firebase with the specified configurations.
   ///
-  /// Cette méthode doit être appelée avant toute autre opération Firebase.
+  /// This method must be called before any other Firebase operation.
   ///
-  /// Paramètres:
-  /// - [apiKey]: Clé API Firebase de votre projet
-  /// - [authDomain]: Domaine d'authentification Firebase
-  /// - [projectId]: ID du projet Firebase
-  /// - [storageBucket]: Bucket de stockage Firebase
-  /// - [messagingSenderId]: ID d'expéditeur pour Firebase Cloud Messaging
-  /// - [appId]: ID de l'application Firebase
-  /// - [isDev]: Si `true`, Firebase Auth utilisera l'émulateur local
-  ///   sur localhost:9099. Par défaut à `false`.
+  /// Parameters:
+  /// - [apiKey]: Firebase API key for your project
+  /// - [authDomain]: Firebase authentication domain
+  /// - [projectId]: Firebase project ID
+  /// - [storageBucket]: Firebase storage bucket
+  /// - [messagingSenderId]: Firebase Cloud Messaging sender ID
+  /// - [appId]: Firebase application ID
+  /// - [isDev]: If `true`, Firebase Auth will use the local emulator
+  ///   on localhost:9099. Defaults to `false`.
   ///
-  /// Exemple:
+  /// Examples:
   ///
   /// ```dart
-  /// // Initialisation pour environnement de production
+  /// // Production environment initialization
   /// await SFFirebaseAuth.initialize(
   ///   apiKey: 'AIzaSyD_example_key',
   ///   authDomain: 'my-app.firebaseapp.com',
@@ -54,7 +54,7 @@ class SFFirebaseAuth {
   ///   appId: '1:1234567890:web:abcdef1234567890',
   /// );
   ///
-  /// // Initialisation pour environnement de développement avec émulateur
+  /// // Development environment with emulator
   /// await SFFirebaseAuth.initialize(
   ///   apiKey: 'demo-key',
   ///   authDomain: 'localhost',
