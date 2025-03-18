@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
+import 'package:saasfork_design_system/utils/form_utils.dart';
 
 class SFLoginForm extends StatefulWidget {
   final ComponentSize size;
@@ -106,10 +107,7 @@ class _SFLoginFormState extends State<SFLoginForm> {
         SFMainButton(
           label: widget.additionalData['login_button'] ?? '',
           onPressed: () {
-            form.markAllAsTouched();
-            setState(() {});
-
-            if (form.valid) {
+            if (FormUtils.isFormValid(form, setState: () => setState(() {}))) {
               widget.onSubmit?.call(form.value);
             }
           },

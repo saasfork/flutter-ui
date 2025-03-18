@@ -5,6 +5,7 @@ import 'package:saasfork_design_system/saasfork_design_system.dart';
 
 class SFProfileView extends StatelessWidget {
   final ProfileFormData additionalData;
+  final ProfileModel? profileModel;
   final Function(ProfileModel) onSubmit;
   final Function()? onDelete;
 
@@ -13,6 +14,7 @@ class SFProfileView extends StatelessWidget {
     required this.additionalData,
     required this.onSubmit,
     this.onDelete,
+    this.profileModel,
   });
 
   @override
@@ -23,6 +25,7 @@ class SFProfileView extends StatelessWidget {
       children: [
         SFProfileForm(
           additionalData: additionalData.toMap(),
+          profileModel: profileModel,
           onSubmit: (profileData) {
             final typedValues = ProfileModel.fromMap(profileData);
             onSubmit(typedValues);

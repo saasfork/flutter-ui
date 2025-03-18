@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:saasfork_design_system/foundations/models/profile_model.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
+import 'package:saasfork_design_system/utils/form_utils.dart';
 
 class SFProfileForm extends StatefulWidget {
   final ComponentSize size;
   final double spacing;
   final Map<String, dynamic> additionalData;
+  final ProfileModel? profileModel;
   final Function(Map<String, dynamic>)? onSubmit;
   final VoidCallback? onDelete;
 
@@ -13,6 +16,7 @@ class SFProfileForm extends StatefulWidget {
     super.key,
     this.onSubmit,
     this.onDelete,
+    this.profileModel,
     this.size = ComponentSize.md,
     this.spacing = AppSpacing.sm,
     this.additionalData = const {
@@ -31,12 +35,7 @@ class SFProfileForm extends StatefulWidget {
 }
 
 class _SFProfileFormState extends State<SFProfileForm> {
-  final form = FormGroup({
-    'email': FormControl<String>(
-      validators: [Validators.required, Validators.email],
-    ),
-    'username': FormControl<String>(validators: [Validators.required]),
-  });
+  late FormGroup form;
 
   late TextEditingController _emailController;
   late TextEditingController _usernameController;
@@ -44,6 +43,18 @@ class _SFProfileFormState extends State<SFProfileForm> {
   @override
   void initState() {
     super.initState();
+
+    form = FormGroup({
+      'email': FormControl<String>(
+        validators: [Validators.required, Validators.email],
+        value: widget.profileModel?.email,
+      ),
+      'username': FormControl<String>(
+        validators: [Validators.required],
+        value: widget.profileModel?.username,
+      ),
+    });
+
     _emailController = TextEditingController(text: form.control('email').value);
     _usernameController = TextEditingController(
       text: form.control('username').value,
@@ -51,10 +62,12 @@ class _SFProfileFormState extends State<SFProfileForm> {
 
     _emailController.addListener(() {
       form.control('email').value = _emailController.text;
+      form.control('email').updateValueAndValidity();
     });
 
     _usernameController.addListener(() {
       form.control('username').value = _usernameController.text;
+      form.control('username').updateValueAndValidity();
     });
   }
 
@@ -76,10 +89,10 @@ class _SFProfileFormState extends State<SFProfileForm> {
             controller: _emailController,
             size: widget.size,
             isInError:
-                form.control('email').touched && form.control('email').invalid,
+                form.control('email').touched && !form.control('email').valid,
           ),
           errorMessage:
-              form.control('email').touched && form.control('email').invalid
+              form.control('email').touched && !form.control('email').valid
                   ? widget.additionalData['error_email_invalid']
                   : null,
         ),
@@ -95,20 +108,18 @@ class _SFProfileFormState extends State<SFProfileForm> {
             size: widget.size,
             isInError:
                 form.control('username').touched &&
-                form.control('username').invalid,
+                !form.control('username').valid,
           ),
           errorMessage:
               form.control('username').touched &&
-                      form.control('username').invalid
+                      !form.control('username').valid
                   ? widget.additionalData['error_username_required'] ?? ''
                   : null,
         ),
         SFMainButton(
           label: widget.additionalData['save_button'] ?? '',
           onPressed: () {
-            form.markAllAsTouched();
-            setState(() {});
-            if (form.valid) {
+            if (FormUtils.isFormValid(form, setState: () => setState(() {}))) {
               widget.onSubmit?.call(form.value);
             }
           },
