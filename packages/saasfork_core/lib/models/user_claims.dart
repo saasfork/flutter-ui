@@ -14,6 +14,7 @@ class UserClaims {
   }
 
   factory UserClaims.fromJson(Map<String, dynamic> json) {
+    // TODO : Erreur quand c'est en enregistrement utilisateur
     assert(json['role'] != null, 'Role must not be null');
 
     return UserClaims(
