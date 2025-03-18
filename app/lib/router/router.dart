@@ -2,6 +2,7 @@ import 'package:app/constants.dart';
 import 'package:app/router/go_router_adapter.dart';
 import 'package:app/views/home_view.dart';
 import 'package:app/views/login_view.dart';
+import 'package:app/views/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +30,7 @@ class AppRouter {
       initialLocation: isLoggedIn ? homePath : loginPath,
       routes: [
         GoRoute(path: loginPath, builder: (context, state) => LoginView()),
+        GoRoute(path: profilePath, builder: (context, state) => ProfileView()),
         GoRoute(path: homePath, builder: (context, state) => HomeView()),
       ],
       redirect: (context, state) async {
