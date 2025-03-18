@@ -18,7 +18,28 @@ Widget buildMainButtonUseCase(BuildContext context) {
     description: 'Size of the button',
   );
 
+  // Utiliser un identifiant plus simple pour les couleurs
+  final colorChoice = context.knobs.list<String>(
+    label: 'Button Color',
+    options: ['Default', 'Green', 'Blue'],
+    initialOption: 'Default',
+    description: 'Color of the button',
+  );
+
+  // Convertir le choix de couleur en Color réelle
+  Color? buttonColor;
+  if (colorChoice == 'Green') {
+    buttonColor = AppColors.green;
+  } else if (colorChoice == 'Blue') {
+    buttonColor = AppColors.blue;
+  }
+
   return Center(
-    child: SFMainButton(label: label, size: size, onPressed: () {}),
+    child: SFMainButton(
+      label: label,
+      size: size,
+      color: buttonColor, // Passer null pour la couleur par défaut
+      onPressed: () {},
+    ),
   );
 }

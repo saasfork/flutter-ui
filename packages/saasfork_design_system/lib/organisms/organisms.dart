@@ -6,3 +6,4 @@ library;
 export './forms/login_form.dart';
 export './forms/register_form.dart';
 export './forms/forgot_password_form.dart';
+export './forms/profile_form.dart';

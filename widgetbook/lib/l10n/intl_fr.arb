@@ -6,12 +6,21 @@
     "placeholder_email": "Entrez votre email",
     "label_password": "Mot de passe",
     "placeholder_password": "Entrez votre mot de passe",
-    "error_email_invalid": "Veuillez entrer un email valide.",
+    "error_email_invalid": "Adresse email invalide.",
     "error_password_length": "Le mot de passe doit comporter au moins 6 caractères.",
     "auth_not_account_text": "Pas encore de compte ? ",
     "auth_not_account_link": "Créez un compte",
     "auth_already_exists_text": "Vous avez déjà un compte ? ",
     "auth_already_exists_link": "Connectez-vous",
     "auth_forgot_password_link": "Mot de passe oublié",
-    "auth_form_divider_text": "ou"
+    "auth_form_divider_text": "ou",
+    "label_username": "Nom d'utilisateur",
+    "placeholder_username": "Entrez votre nom d'utilisateur",
+    "error_username_required": "Le nom d'utilisateur est requis.",
+    "profile_title": "Profil",
+    "profile_label_name": "Nom",
+    "profile_placeholder_name": "Entrez votre nom",
+    "profile_error_name_required": "Veuillez entrer votre nom",
+    "profile_save_button": "Enregistrer",
+    "profile_delete_button": "Supprimer"
 }

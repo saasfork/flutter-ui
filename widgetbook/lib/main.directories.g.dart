@@ -27,8 +27,10 @@ import 'package:widgetbook_workspace/molecules/forms/form_field.dart' as _i11;
 import 'package:widgetbook_workspace/organisms/forgot_password_form.dart'
     as _i12;
 import 'package:widgetbook_workspace/organisms/login_form.dart' as _i13;
-import 'package:widgetbook_workspace/organisms/register_form.dart' as _i14;
-import 'package:widgetbook_workspace/views/auth_view.dart' as _i15;
+import 'package:widgetbook_workspace/organisms/profile_form.dart' as _i14;
+import 'package:widgetbook_workspace/organisms/register_form.dart' as _i15;
+import 'package:widgetbook_workspace/views/auth_view.dart' as _i17;
+import 'package:widgetbook_workspace/views/profile_view.dart' as _i16;
 
 final directories = <_i1.WidgetbookNode>[
   _i1.WidgetbookFolder(
@@ -157,10 +159,17 @@ final directories = <_i1.WidgetbookNode>[
             ),
           ),
           _i1.WidgetbookLeafComponent(
+            name: 'SFProfileForm',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Default',
+              builder: _i14.buildProfileFormUseCase,
+            ),
+          ),
+          _i1.WidgetbookLeafComponent(
             name: 'SFRegisterForm',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i14.buildRegisterFormUseCase,
+              builder: _i15.buildRegisterFormUseCase,
             ),
           ),
         ],
@@ -171,10 +180,17 @@ final directories = <_i1.WidgetbookNode>[
     name: 'views',
     children: [
       _i1.WidgetbookLeafComponent(
+        name: 'ProfileView',
+        useCase: _i1.WidgetbookUseCase(
+          name: 'Default',
+          builder: _i16.buildProfileViewUseCase,
+        ),
+      ),
+      _i1.WidgetbookLeafComponent(
         name: 'SFAuthView',
         useCase: _i1.WidgetbookUseCase(
           name: 'Default',
-          builder: _i15.buildAuthViewUseCase,
+          builder: _i17.buildAuthViewUseCase,
         ),
       ),
     ],

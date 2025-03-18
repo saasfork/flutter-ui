@@ -5,11 +5,13 @@ class SFMainButton extends StatelessWidget {
   final String label;
   final ComponentSize size;
   final VoidCallback onPressed;
+  final Color? color;
 
   const SFMainButton({
     required this.label,
     required this.onPressed,
     this.size = ComponentSize.md,
+    this.color,
     super.key,
   });
 
@@ -25,11 +27,21 @@ class SFMainButton extends StatelessWidget {
   ButtonStyle? _getButtonStyle(BuildContext context) {
     final theme = Theme.of(context).elevatedButtonTheme.style;
 
-    return theme?.copyWith(
+    final baseStyle = theme?.copyWith(
       padding: WidgetStateProperty.all(AppSizes.getPadding(size)),
       textStyle: WidgetStateProperty.all(
         AppTypography.getScaledStyle(AppTypography.labelLarge, size),
       ),
     );
+
+    // Appliquer la couleur personnalisée si elle est fournie
+    if (color != null) {
+      return baseStyle?.copyWith(
+        backgroundColor: WidgetStateProperty.all(color),
+        side: WidgetStateProperty.all(BorderSide(color: color!)),
+      );
+    }
+
+    return baseStyle;
   }
 }

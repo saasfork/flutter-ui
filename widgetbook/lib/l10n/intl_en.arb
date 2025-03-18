@@ -13,5 +13,14 @@
   "auth_already_exists_text": "Already have an account? ",
   "auth_already_exists_link": "Log in",
   "auth_forgot_password_link": "Forgot password",
-  "auth_form_divider_text": "or"
+  "auth_form_divider_text": "or",
+  "label_username": "Username",
+  "placeholder_username": "Enter your username",
+  "error_username_required": "Username is required.",
+  "profile_title": "Profile",
+  "profile_label_name": "Name",
+  "profile_placeholder_name": "Enter your name",
+  "profile_error_name_required": "Please enter your name",
+  "profile_save_button": "Save",
+  "profile_delete_button": "Delete"
 }
