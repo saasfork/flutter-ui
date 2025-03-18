@@ -1,5 +1,5 @@
 import 'package:app/generated/l10n.dart';
-import 'package:app/router.dart';
+import 'package:app/router/router.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';

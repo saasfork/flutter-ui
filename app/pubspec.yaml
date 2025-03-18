@@ -18,6 +18,10 @@ dependencies:
 
   saasfork_firebase_service:
     path: ../packages/saasfork_firebase_service
+
+  saasfork_core:
+    path: ../packages/saasfork_core
+
   provider: ^6.1.2
   go_router: ^14.8.1
   signals: ^6.0.2

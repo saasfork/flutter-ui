@@ -1,4 +1,4 @@
-import 'package:app/router_initialize.dart';
+import 'package:app/router/router_initialize.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -11,7 +11,7 @@ Future<void> main() async {
   await FlutterLocalization.instance.ensureInitialized();
   await dotenv.load(fileName: ".env");
 
-  await SFFirebaseAuth.initialize(
+  await SFFirebaseBootstrap.initialize(
     apiKey: dotenv.env['FIREBASE_API_KEY']!,
     authDomain: dotenv.env['FIREBASE_AUTH_DOMAIN']!,
     projectId: dotenv.env['FIREBASE_PROJECT_ID']!,
@@ -31,9 +31,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => SFFirebaseAuthProvider(),
-        ),
+        ChangeNotifierProvider(create: (context) => SFFirebaseAuthProvider()),
       ],
       child: RouterInitialize(),
     );

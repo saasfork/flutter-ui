@@ -1,3 +1,4 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -26,7 +27,7 @@ import 'package:firebase_core/firebase_core.dart';
 ///   password: 'password123'
 /// );
 /// ```
-class SFFirebaseAuth {
+class SFFirebaseBootstrap {
   /// Initializes Firebase with the specified configurations.
   ///
   /// This method must be called before any other Firebase operation.
@@ -87,6 +88,7 @@ class SFFirebaseAuth {
 
     if (isDev) {
       await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+      FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
     }
   }
 }

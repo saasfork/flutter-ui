@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:saasfork_firebase_service/models/user_model.dart';
+import 'package:saasfork_core/models/user_model.dart';
 
 class AuthResultModel {
   final bool success;

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:saasfork_core/saasfork_core.dart';
+import 'package:saasfork_firebase_service/cloud_functions/user_functions.dart';
 import 'package:saasfork_firebase_service/models/auth_result.dart';
-import 'package:saasfork_firebase_service/models/user_model.dart';
 import 'package:saasfork_firebase_service/state_notifier.dart';
 
 /// Firebase Authentication service for SaasFork.
@@ -11,7 +11,7 @@ import 'package:saasfork_firebase_service/state_notifier.dart';
 ///
 /// Usage example:
 /// ```dart
-/// final authProvider = SFFirebaseAuthProvider(context);
+/// final authProvider = SFFirebaseAuthProvider();
 ///
 /// // Check if a user is logged in
 /// if (authProvider.currentUser != null) {
@@ -26,24 +26,26 @@ class SFFirebaseAuthProvider extends StateNotifier<UserModel?> {
 
   /// Creates an authentication service instance and checks the current login state.
   ///
-  /// The [context] parameter is used to access the application context.
+  /// This constructor initializes the auth listener to update the current user state
+  /// whenever the authentication status changes.
   ///
   /// Example:
   /// ```dart
-  /// final authProvider = SFFirebaseAuthProvider(context);
+  /// final authProvider = SFFirebaseAuthProvider();
   /// ```
   SFFirebaseAuthProvider() {
     try {
-      FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      FirebaseAuth.instance.authStateChanges().listen((User? user) async {
         if (user == null) {
           resetState();
           return;
         }
 
-        setState(UserModel(uid: user.uid, email: user.email));
+        final UserClaims claims = await getUserClaims();
+        setState(UserModel(uid: user.uid, email: user.email, claims: claims));
       });
     } catch (e) {
-      debugPrint('Error retrieving current user: ${e.toString()}');
+      error('Error retrieving current user: ${e.toString()}');
       resetState();
     }
   }
@@ -64,9 +66,9 @@ class SFFirebaseAuthProvider extends StateNotifier<UserModel?> {
   /// } else {
   ///   print('Login failed: ${result.error}');
   ///   // Handle specific error cases
-  ///   if (result.error!.contains('user-not-found')) {
+  ///   if (result.error!.contains('Aucun utilisateur trouvé')) {
   ///     // Show user not found message
-  ///   } else if (result.error!.contains('wrong-password')) {
+  ///   } else if (result.error!.contains('Mot de passe incorrect')) {
   ///     // Show incorrect password message
   ///   }
   /// }
@@ -74,7 +76,7 @@ class SFFirebaseAuthProvider extends StateNotifier<UserModel?> {
   Future<AuthResultModel> login(String email, String password) async {
     bool success = false;
     UserModel? userModel;
-    String? error;
+    String? errorString;
 
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
@@ -82,9 +84,12 @@ class SFFirebaseAuthProvider extends StateNotifier<UserModel?> {
         password: password,
       );
 
+      final claims = await getUserClaims();
+
       userModel = UserModel(
         uid: userCredential.user!.uid,
         email: userCredential.user!.email,
+        claims: claims,
       );
 
       setState(userModel);
@@ -92,25 +97,33 @@ class SFFirebaseAuthProvider extends StateNotifier<UserModel?> {
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'user-not-found':
-          error = 'Aucun utilisateur trouvé avec cet email';
+          errorString = 'Aucun utilisateur trouvé avec cet email';
           break;
         case 'wrong-password':
-          error = 'Mot de passe incorrect';
+          errorString = 'Mot de passe incorrect';
           break;
         // Autres cas spécifiques
         default:
-          error = e.message ?? e.toString();
+          errorString = e.message ?? e.toString();
       }
+
+      error('Login error: $errorString');
     } catch (e) {
-      error = e.toString();
+      error('Login error: ${e.toString()}');
+      errorString = e.toString();
     }
 
-    return AuthResultModel(success: success, user: userModel, error: error);
+    return AuthResultModel(
+      success: success,
+      user: userModel,
+      error: errorString,
+    );
   }
 
   /// Registers a new user with email and password.
   ///
   /// Returns an [AuthResultModel] containing the operation result.
+  /// Automatically initializes user claims with a default 'user' role.
   ///
   /// Parameters:
   /// - [email]: New user's email address
@@ -125,31 +138,93 @@ class SFFirebaseAuthProvider extends StateNotifier<UserModel?> {
   /// } else {
   ///   print('Registration error: ${result.error}');
   ///   // Handle specific errors (e.g., email already in use)
-  ///   if (result.error!.contains('email-already-in-use')) {
-  ///     // Show appropriate message
-  ///   }
   /// }
   /// ```
   Future<AuthResultModel> register(String email, String password) async {
     bool success = false;
     UserModel? userModel;
-    String? error;
+    String? errorString;
 
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
 
+      try {
+        String roleString = Roles.user.toString();
+
+        await UserFunctions.initializeUserClaims(userCredential.user!.uid, {
+          'role': roleString,
+        });
+      } catch (e) {
+        error('Warning: Unable to set default claims: ${e.toString()}');
+      }
+
+      // Récupérer les claims (qui pourraient être vides si l'initialisation a échoué)
+      final UserClaims claims = await getUserClaims();
+
       userModel = UserModel(
         uid: userCredential.user!.uid,
         email: userCredential.user!.email,
+        claims: claims,
       );
+
       setState(userModel);
       success = true;
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'email-already-in-use':
+          errorString =
+              'Vous ne pouvez pas créer de compte avec ces informations';
+          break;
+
+        case 'weak-password':
+          errorString = 'Le mot de passe fourni est trop faible';
+          break;
+
+        default:
+          errorString = e.message ?? e.toString();
+      }
+
+      error('Registration error: $errorString');
     } catch (e) {
-      error = e.toString();
+      error('Registration error: ${e.toString()}');
+      errorString = e.toString();
     }
 
-    return AuthResultModel(success: success, user: userModel, error: error);
+    return AuthResultModel(
+      success: success,
+      user: userModel,
+      error: errorString,
+    );
+  }
+
+  /// Retrieves the current user's claims from Firebase Authentication.
+  ///
+  /// Claims contain user role and other authorization information.
+  /// Returns a default visitor role if claims cannot be retrieved.
+  ///
+  /// Returns a [UserClaims] object containing the user's permissions.
+  ///
+  /// Example:
+  /// ```dart
+  /// final claims = await authProvider.getUserClaims();
+  /// if (claims.role == Roles.admin) {
+  ///   // Show admin features
+  /// }
+  /// ```
+  Future<UserClaims> getUserClaims() async {
+    try {
+      User? user = _auth.currentUser;
+
+      if (user != null) {
+        IdTokenResult idTokenResult = await user.getIdTokenResult();
+        return UserClaims.fromJson(idTokenResult.claims!);
+      }
+    } catch (e) {
+      error('Error fetching user claims: ${e.toString()}', error: e);
+    }
+
+    return UserClaims(role: Roles.visitor);
   }
 
   /// Sends a password reset email to the specified address.
@@ -163,25 +238,24 @@ class SFFirebaseAuthProvider extends StateNotifier<UserModel?> {
   /// ```dart
   /// final result = await authProvider.resetPassword('user@example.com');
   /// if (result.success) {
-  ///   print('Password reset email sent successfully');
-  ///   // Show confirmation message to user
+  ///   print('Instructions de réinitialisation envoyées à votre email');
   /// } else {
-  ///   print('Error sending reset email: ${result.error}');
-  ///   // Handle potential errors such as invalid email
+  ///   print('Erreur: ${result.error}');
   /// }
   /// ```
   Future<AuthResultModel> resetPassword(String email) async {
     bool success = false;
-    String? error;
+    String? errorString;
 
     try {
       await _auth.sendPasswordResetEmail(email: email);
       success = true;
     } catch (e) {
-      error = e.toString();
+      errorString = e.toString();
+      error('Error sending reset email: $errorString');
     }
 
-    return AuthResultModel(success: success, error: error);
+    return AuthResultModel(success: success, error: errorString);
   }
 
   /// Signs out the currently authenticated user.
@@ -201,10 +275,11 @@ class SFFirebaseAuthProvider extends StateNotifier<UserModel?> {
       resetState();
     } catch (e) {
       // Handle the error silently or log it
-      debugPrint('Error during sign out: ${e.toString()}');
+      error('Error during sign out: ${e.toString()}');
     }
   }
 
-  /// TODO: Pas de méthode pour réauthentifier l'utilisateur (Modification de profile)
-  /// TODO: Pas de méthode pour changer le mot de passe
+  /// Fonctionnalités à implementer:
+  /// - Réauthentification de l'utilisateur pour les opérations sensibles
+  /// - Changement de mot de passe pour l'utilisateur connecté
 }

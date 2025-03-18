@@ -26,6 +26,10 @@ scripts:
     run: firebase emulators:start
     description: Launch firebase emulator
 
+  dev:
+    run: cd functions && npm run dev
+    description: Start Firebase emulator and watch functions for changes
+
   test:
     run: melos exec --dir-exists="test" -c 1 -- "flutter test --coverage"
     description: Run all tests

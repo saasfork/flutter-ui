@@ -84,5 +84,4 @@ debug
 
 .vscode
 .firebaserc
-firebase.json
 *.prompt.md
