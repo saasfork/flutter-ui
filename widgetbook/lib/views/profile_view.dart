@@ -53,19 +53,28 @@ class _ProfileViewState extends State<ProfileView> {
                     logout = false;
                   });
                 },
-                onLogout: () {
-                  setState(() {
-                    logout = true;
-                    deleted = false;
-                    values = {};
-                  });
-                },
-                onDelete:
-                    () => setState(() {
-                      values = {};
-                      deleted = true;
-                      logout = false;
-                    }),
+                children: [
+                  SFMainButton(
+                    label: profileTextData.logoutButton,
+                    onPressed:
+                        () => setState(() {
+                          logout = true;
+                          deleted = false;
+                          values = {};
+                        }),
+                    color: AppColors.orange,
+                  ),
+                  SFMainButton(
+                    label: profileTextData.deleteButton,
+                    onPressed:
+                        () => setState(() {
+                          values = {};
+                          deleted = true;
+                          logout = false;
+                        }),
+                    color: AppColors.red,
+                  ),
+                ],
               ),
             ),
           ),

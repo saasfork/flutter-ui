@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:saasfork_design_system/foundations/data/profile_form_data.dart';
 import 'package:saasfork_design_system/foundations/models/profile_model.dart';
@@ -7,16 +8,14 @@ class SFProfileView extends StatelessWidget {
   final ProfileFormData additionalData;
   final ProfileModel? profileModel;
   final Function(ProfileModel) onSubmit;
-  final Function()? onDelete;
-  final Function()? onLogout;
+  final List<Widget> children;
 
   const SFProfileView({
     super.key,
     required this.additionalData,
-    required this.onSubmit,
-    this.onDelete,
     this.profileModel,
-    this.onLogout,
+    required this.onSubmit,
+    this.children = const [],
   });
 
   @override
@@ -33,18 +32,7 @@ class SFProfileView extends StatelessWidget {
             onSubmit(typedValues);
           },
         ),
-        if (onLogout != null)
-          SFMainButton(
-            label: 'Déconnexion',
-            onPressed: onLogout!,
-            color: AppColors.orange,
-          ),
-        if (onDelete != null)
-          SFMainButton(
-            label: additionalData.deleteButton,
-            onPressed: onDelete!,
-            color: AppColors.red,
-          ),
+        if (children.isNotEmpty) ...children,
       ],
     );
   }
