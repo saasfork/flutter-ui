@@ -28,6 +28,7 @@ class ProfileView extends StatelessWidget {
               errorUsernameRequired: 'Username is required',
               errorEmailInvalid: 'Email is invalid',
               saveButton: 'Save',
+              logoutButton: 'Logout',
               deleteButton: 'Delete',
             ),
             onSubmit: (ProfileModel profileModel) async {
@@ -41,6 +42,9 @@ class ProfileView extends StatelessWidget {
               // } else {
               //   print('Error updating profile: ${result.errorMessage}');
               // }
+            },
+            onLogout: () {
+              firebaseAuthProvider.signOut();
             },
           ),
         ],
