@@ -36,9 +36,7 @@ jobs:
       - name: Construction de l'application pour le web
         run: |
           cd widgetbook
-          flutter build web --release \
-            --base-href "/" \
-            --web-renderer=canvaskit
+          flutter build web
             
       - name: Vérifier que le build a réussi
         run: |
