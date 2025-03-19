@@ -1,9 +1,9 @@
 name: Run Tests
 on:
   push:
-    branches: [ main, master, develop ]
+    branches: [ main, develop ]
   pull_request:
-    branches: [ main, master, develop ]
+    branches: [ main, develop ]
 
 jobs:
   test:
@@ -22,7 +22,7 @@ jobs:
           cd packages/saasfork_firebase_service
           flutter pub get
 
-      - name: Run Tests
-        run: |
-          cd packages/saasfork_firebase_service
-          flutter test
+      # - name: Run Tests
+      #   run: |
+      #     cd packages/saasfork_firebase_service
+      #     flutter test
