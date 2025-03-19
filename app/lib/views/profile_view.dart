@@ -49,7 +49,10 @@ class ProfileView extends StatelessWidget {
               ),
               SFMainButton(
                 label: profileFormData.deleteButton,
-                onPressed: () {},
+                onPressed: () async {
+                  /// TODO: Ajoute alert
+                  await firebaseAuthProvider.deleteUserAccount();
+                },
                 color: AppColors.red,
               ),
             ],

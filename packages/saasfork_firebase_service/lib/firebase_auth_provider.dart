@@ -370,6 +370,67 @@ class SFFirebaseAuthProvider extends StateNotifier<AuthStateModel?> {
     return state!;
   }
 
+  /// Supprime le compte utilisateur actuellement connecté.
+  ///
+  /// Cette méthode supprime directement l'utilisateur via Firebase Auth.
+  /// Le nettoyage des données associées est géré automatiquement par une Cloud Function.
+  ///
+  /// Retourne un [AuthStateModel] indiquant le résultat de l'opération.
+  ///
+  /// Example:
+  /// ```dart
+  /// final result = await authProvider.deleteUserAccount();
+  /// if (result.state != AuthState.error) {
+  ///   print('Compte supprimé avec succès');
+  ///   // La redirection sera automatique via authStateChanges
+  /// } else {
+  ///   print('Erreur: ${result.errorMessage}');
+  /// }
+  /// ```
+  Future<AuthStateModel> deleteUserAccount() async {
+    // Vérifier que l'utilisateur est connecté
+    if (state == null || state!.user == null) {
+      return AuthStateModel(
+        state: AuthState.error,
+        errorMessage: 'User not authenticated',
+      );
+    }
+
+    // Indiquer que la suppression est en cours
+    mutateState(
+      (currentState) => currentState!.copyWith(state: AuthState.updating),
+    );
+
+    try {
+      User? currentFirebaseUser = _auth.currentUser;
+      if (currentFirebaseUser == null) {
+        throw Exception('User not authenticated');
+      }
+
+      await currentFirebaseUser.delete();
+
+      return AuthStateModel(state: AuthState.idle, errorMessage: null);
+    } on FirebaseAuthException catch (e) {
+      // Gérer spécifiquement le cas où une réauthentification est requise
+      if (e.code == 'requires-recent-login') {
+        setState(
+          state!.copyWith(
+            state: AuthState.error,
+            errorMessage:
+                'Cette opération nécessite une connexion récente. Veuillez vous reconnecter.',
+          ),
+        );
+        return state!;
+      }
+
+      setState(_handleFirebaseAuthError(e, state!));
+      return state!;
+    } catch (e) {
+      setState(_handleFirebaseAuthError(e, state!));
+      return state!;
+    }
+  }
+
   // Créer une méthode utilitaire pour gérer les erreurs Firebase
   AuthStateModel _handleFirebaseAuthError(
     dynamic e,
