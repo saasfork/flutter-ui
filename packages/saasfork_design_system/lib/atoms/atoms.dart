@@ -16,3 +16,6 @@ export 'dividers/divider_with_text.dart';
 // Inputs - Différents types d'inputs disponibles
 export './inputs/text_field.dart';
 export './inputs/password_field.dart';
+
+// Icons - Différents types d'icônes disponibles
+export './icons/icon.dart';

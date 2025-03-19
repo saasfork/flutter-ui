@@ -27,11 +27,6 @@ class AppRouter {
       final currentPath = state.path;
       final isAuthenticated = authState?.isAuthenticated ?? false;
 
-      // if (authState?.state == AuthState.updating) {
-      //   // Ignorer les redirections pendant les mises à jour
-      //   return null;
-      // }
-
       /// Je suis authentifié et j'accède à une route privée
       if (isAuthenticated && _privateRoutes.contains(currentPath)) {
         return null;

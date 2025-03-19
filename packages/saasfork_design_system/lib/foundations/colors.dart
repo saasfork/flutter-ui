@@ -42,4 +42,9 @@ class AppColors {
   static final AppColor zinc = AppColor.fromBase(const Color(0xFF71717A));
   static final AppColor neutral = AppColor.fromBase(const Color(0xFFA3A3A3));
   static final AppColor stone = AppColor.fromBase(const Color(0xFF78716C));
+
+  static final AppColor info = AppColors.blue;
+  static final AppColor success = AppColors.green;
+  static final AppColor danger = AppColors.red;
+  static final AppColor warning = AppColors.orange;
 }

@@ -70,17 +70,22 @@ class SFFirebaseAuthProvider extends StateNotifier<AuthStateModel?> {
             AuthStateModel(state: AuthState.unauthenticated, user: null),
           );
         } else {
-          final claims = await getUserClaims();
-          final userModel = UserModel(
-            uid: user.uid,
-            email: user.email,
-            username: user.displayName,
-            claims: claims,
-          );
+          try {
+            final claims = await getUserClaims();
 
-          setState(
-            AuthStateModel(state: AuthState.authenticated, user: userModel),
-          );
+            final userModel = UserModel(
+              uid: user.uid,
+              email: user.email,
+              username: user.displayName,
+              claims: claims,
+            );
+
+            setState(
+              AuthStateModel(state: AuthState.authenticated, user: userModel),
+            );
+          } catch (e) {
+            warn("Error processing user authentication: ${e.toString()}");
+          }
         }
 
         if (_initializeCompleter != null &&
@@ -192,11 +197,11 @@ class SFFirebaseAuthProvider extends StateNotifier<AuthStateModel?> {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
 
-      try {
-        String roleString = Roles.user.toString();
+      Roles role = Roles.user;
 
+      try {
         await UserFunctions.initializeUserClaims(userCredential.user!.uid, {
-          'role': roleString,
+          'role': role.toString(),
         });
       } catch (e) {
         error('Warning: Unable to set default claims: ${e.toString()}');
@@ -206,6 +211,7 @@ class SFFirebaseAuthProvider extends StateNotifier<AuthStateModel?> {
       final UserClaims claims = await getUserClaims();
 
       authStateModel = authStateModel.copyWith(
+        state: AuthState.authenticated,
         user: UserModel(
           uid: userCredential.user!.uid,
           email: userCredential.user!.email,
@@ -240,7 +246,8 @@ class SFFirebaseAuthProvider extends StateNotifier<AuthStateModel?> {
     try {
       User? user = _auth.currentUser;
 
-      IdTokenResult idTokenResult = await user!.getIdTokenResult();
+      await user!.getIdToken(true);
+      IdTokenResult idTokenResult = await user.getIdTokenResult();
       return UserClaims.fromJson(idTokenResult.claims!);
     } catch (e) {
       error('Error fetching user claims: ${e.toString()}', error: e);

@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:saasfork_design_system/foundations/data/profile_form_data.dart';
 import 'package:saasfork_design_system/foundations/models/profile_model.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
 

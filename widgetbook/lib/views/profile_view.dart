@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:saasfork_design_system/foundations/data/profile_form_data.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import 'package:widgetbook_workspace/generated/l10n.dart';

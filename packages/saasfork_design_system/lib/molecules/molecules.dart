@@ -4,3 +4,6 @@ library;
 
 // Inputs
 export './forms/form_field.dart';
+
+// Overlays
+export './overlays/dialog.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:saasfork_design_system/foundations/data/profile_form_data.dart';
 import 'package:saasfork_design_system/foundations/models/profile_model.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
 import 'package:saasfork_firebase_service/saasfork_firebase_service.dart';
@@ -49,10 +48,20 @@ class ProfileView extends StatelessWidget {
               ),
               SFMainButton(
                 label: profileFormData.deleteButton,
-                onPressed: () async {
-                  /// TODO: Ajoute alert
-                  await firebaseAuthProvider.deleteUserAccount();
-                },
+                onPressed:
+                    () => showDialog(
+                      context: context,
+                      builder:
+                          (context) => SFDialog(
+                            title: 'Êtes-vous sûr ?',
+                            message:
+                                'Êtes-vous sûr de vouloir supprimer votre compte ?',
+                            onCancel: () => Navigator.of(context).pop(),
+                            onDeactivate: () async {
+                              await firebaseAuthProvider.deleteUserAccount();
+                            },
+                          ),
+                    ),
                 color: AppColors.red,
               ),
             ],
