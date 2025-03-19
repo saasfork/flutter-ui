@@ -59,19 +59,19 @@ jobs:
 
       - name: Déploiement sur le dépôt cible
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_CODE }}
+          TOKEN: ${{ secrets.PAT_CODE }}
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           
           # Vérifier le token d'accès
-          if [ -z "$GITHUB_TOKEN" ]; then
+          if [ -z "$TOKEN" ]; then
             echo "Le token d'accès PAT_CODE n'est pas défini."
             exit 1
           fi
           
           echo "Configuration du dépôt cible..."
-          REPO_URL="https://${GITHUB_TOKEN}@github.com/saasfork/saasfork-ui-widgetbook.git"
+          REPO_URL="https://${TOKEN}@github.com/saasfork/saasfork-ui-widgetbook.git"
           
           # Utiliser un répertoire temporaire pour le clone
           mkdir -p tmp_deploy
@@ -100,14 +100,8 @@ jobs:
             echo "Clonage du dépôt cible..."
             git clone "$REPO_URL" .
             
-            # Vérifier si le dépôt a une branche main
-            if ! git show-ref --verify --quiet refs/remotes/origin/main; then
-              echo "Le dépôt existe mais n'a pas de branche main. Création d'une nouvelle branche..."
-              git checkout --orphan main
-            else
-              echo "Basculement vers la branche main..."
-              git checkout main || git checkout -b main
-            fi
+            git fetch origin main || echo "Pas de branche main, elle sera créée..."
+            git checkout main || git checkout -b main
           fi
           
           # Préserver le répertoire .git mais supprimer le reste
