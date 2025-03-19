@@ -7,12 +7,14 @@ class SFCircularButton extends StatelessWidget {
   final ComponentSize size;
   final VoidCallback onPressed;
   final Color? iconColor;
+  final Color? backgroundColor;
 
   const SFCircularButton({
     required this.icon,
     required this.onPressed,
     this.size = ComponentSize.md,
     this.iconColor,
+    this.backgroundColor,
     super.key,
   });
 
@@ -37,7 +39,7 @@ class SFCircularButton extends StatelessWidget {
   ButtonStyle? _getButtonStyle(BuildContext context) {
     final theme = Theme.of(context).elevatedButtonTheme.style;
 
-    return theme?.copyWith(
+    final baseStyle = theme?.copyWith(
       padding: WidgetStateProperty.all(EdgeInsets.zero),
       shape: WidgetStateProperty.all(const CircleBorder()),
       // Assurer que la taille est fixe et ne dépend pas du contenu
@@ -45,6 +47,17 @@ class SFCircularButton extends StatelessWidget {
       fixedSize: WidgetStateProperty.all(Size.square(_getButtonDimension())),
       maximumSize: WidgetStateProperty.all(Size.square(_getButtonDimension())),
     );
+
+    // Appliquer la couleur personnalisée si fournie
+    if (backgroundColor != null) {
+      return baseStyle?.copyWith(
+        backgroundColor: WidgetStateProperty.resolveWith((states) {
+          return backgroundColor;
+        }),
+      );
+    }
+
+    return baseStyle;
   }
 
   // Méthode pour obtenir la dimension du bouton en fonction de sa taille

@@ -29,7 +29,45 @@ Widget buildCircularButtonUseCase(BuildContext context) {
     description: 'Size of the button',
   );
 
+  final Map<String, Color?> iconColorOptions = {
+    'Default': null,
+    'Rouge': AppColors.red,
+    'Vert': AppColors.green,
+  };
+
+  final String selectedIconColorKey = context.knobs.list<String>(
+    label: 'Icon Color',
+    options: iconColorOptions.keys.toList(),
+    initialOption: 'Default',
+    description: 'Color of the icon',
+  );
+
+  // Liste de couleurs prédéfinies pour l'arrière-plan
+  final Map<String, Color?> backgroundColorOptions = {
+    'Default': null,
+    'Rouge': AppColors.red,
+    'Vert': AppColors.green,
+  };
+
+  final String selectedBackgroundColorKey = context.knobs.list<String>(
+    label: 'Background Color',
+    options: backgroundColorOptions.keys.toList(),
+    initialOption: 'Default',
+    description: 'Background color of the button',
+  );
+
+  final Color? backgroundColor =
+      backgroundColorOptions[selectedBackgroundColorKey];
+
+  final Color? iconColor = iconColorOptions[selectedIconColorKey];
+
   return Center(
-    child: SFCircularButton(icon: selectedIcon, size: size, onPressed: () {}),
+    child: SFCircularButton(
+      icon: selectedIcon,
+      size: size,
+      onPressed: () {},
+      iconColor: iconColor,
+      backgroundColor: backgroundColor,
+    ),
   );
 }

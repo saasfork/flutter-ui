@@ -24,15 +24,17 @@ import 'package:widgetbook_workspace/atoms/dividers/divider_with_text.dart'
 import 'package:widgetbook_workspace/atoms/icons/icon.dart' as _i9;
 import 'package:widgetbook_workspace/atoms/inputs/text_field.dart' as _i10;
 import 'package:widgetbook_workspace/foundations/typography.dart' as _i11;
-import 'package:widgetbook_workspace/molecules/forms/form_field.dart' as _i12;
-import 'package:widgetbook_workspace/molecules/overlays/dialog.dart' as _i13;
+import 'package:widgetbook_workspace/molecules/buttons/toggle_simple_button.dart'
+    as _i12;
+import 'package:widgetbook_workspace/molecules/forms/form_field.dart' as _i13;
+import 'package:widgetbook_workspace/molecules/overlays/dialog.dart' as _i14;
 import 'package:widgetbook_workspace/organisms/forgot_password_form.dart'
-    as _i14;
-import 'package:widgetbook_workspace/organisms/login_form.dart' as _i15;
-import 'package:widgetbook_workspace/organisms/profile_form.dart' as _i16;
-import 'package:widgetbook_workspace/organisms/register_form.dart' as _i17;
-import 'package:widgetbook_workspace/views/auth_view.dart' as _i19;
-import 'package:widgetbook_workspace/views/profile_view.dart' as _i18;
+    as _i15;
+import 'package:widgetbook_workspace/organisms/login_form.dart' as _i16;
+import 'package:widgetbook_workspace/organisms/profile_form.dart' as _i17;
+import 'package:widgetbook_workspace/organisms/register_form.dart' as _i18;
+import 'package:widgetbook_workspace/views/auth_view.dart' as _i20;
+import 'package:widgetbook_workspace/views/profile_view.dart' as _i19;
 
 final directories = <_i1.WidgetbookNode>[
   _i1.WidgetbookFolder(
@@ -139,13 +141,25 @@ final directories = <_i1.WidgetbookNode>[
     name: 'molecules',
     children: [
       _i1.WidgetbookFolder(
+        name: 'buttons',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'SFToggleSimpleButton',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Default',
+              builder: _i12.buildToggleSimpleButtonUseCase,
+            ),
+          ),
+        ],
+      ),
+      _i1.WidgetbookFolder(
         name: 'forms',
         children: [
           _i1.WidgetbookLeafComponent(
             name: 'SFFormfield',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i12.buildFormFieldUseCase,
+              builder: _i13.buildFormFieldUseCase,
             ),
           ),
         ],
@@ -157,7 +171,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'SFDialog',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i13.buildDialogUseCase,
+              builder: _i14.buildDialogUseCase,
             ),
           ),
         ],
@@ -174,28 +188,28 @@ final directories = <_i1.WidgetbookNode>[
             name: 'SFForgotPasswordForm',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i14.buildForgotPasswordFormUseCase,
+              builder: _i15.buildForgotPasswordFormUseCase,
             ),
           ),
           _i1.WidgetbookLeafComponent(
             name: 'SFLoginForm',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i15.buildLoginFormUseCase,
+              builder: _i16.buildLoginFormUseCase,
             ),
           ),
           _i1.WidgetbookLeafComponent(
             name: 'SFProfileForm',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i16.buildProfileFormUseCase,
+              builder: _i17.buildProfileFormUseCase,
             ),
           ),
           _i1.WidgetbookLeafComponent(
             name: 'SFRegisterForm',
             useCase: _i1.WidgetbookUseCase(
               name: 'Default',
-              builder: _i17.buildRegisterFormUseCase,
+              builder: _i18.buildRegisterFormUseCase,
             ),
           ),
         ],
@@ -209,14 +223,14 @@ final directories = <_i1.WidgetbookNode>[
         name: 'ProfileView',
         useCase: _i1.WidgetbookUseCase(
           name: 'Default',
-          builder: _i18.buildProfileViewUseCase,
+          builder: _i19.buildProfileViewUseCase,
         ),
       ),
       _i1.WidgetbookLeafComponent(
         name: 'SFAuthView',
         useCase: _i1.WidgetbookUseCase(
           name: 'Default',
-          builder: _i19.buildAuthViewUseCase,
+          builder: _i20.buildAuthViewUseCase,
         ),
       ),
     ],

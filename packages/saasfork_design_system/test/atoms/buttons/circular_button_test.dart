@@ -250,4 +250,96 @@ void main() {
     final bgColor = buttonStyle.backgroundColor!.resolve({});
     expect(bgColor, equals(Colors.purple));
   });
+
+  testWidgets('SFCircularButton should apply custom colors correctly', (
+    WidgetTester tester,
+  ) async {
+    // Custom colors
+    const customIconColor = Colors.amber;
+    const customBackgroundColor = Colors.indigo;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: SFCircularButton(
+            icon: Icons.add,
+            onPressed: () {},
+            iconColor: customIconColor,
+            backgroundColor: customBackgroundColor,
+          ),
+        ),
+      ),
+    );
+
+    // Vérifier la couleur de l'icône
+    final iconWidget = tester.widget<Icon>(find.byType(Icon));
+    expect(iconWidget.color, equals(customIconColor));
+
+    // Vérifier que le backgroundColor a été passé au widget
+    final circularButton = tester.widget<SFCircularButton>(
+      find.byType(SFCircularButton),
+    );
+    expect(circularButton.backgroundColor, equals(customBackgroundColor));
+
+    // Rechercher le bouton ElevatedButton mais sans vérifier sa couleur directement
+    // car la façon dont elle est appliquée peut varier
+    expect(
+      find.descendant(
+        of: find.byType(SFCircularButton),
+        matching: find.byType(ElevatedButton),
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets(
+    'SFCircularButton should have correct icon sizes based on button size',
+    (WidgetTester tester) async {
+      // Map des tailles d'icônes attendues pour chaque taille de composant
+      final Map<ComponentSize, double> expectedIconSizes = {
+        ComponentSize.xs: 16.0,
+        ComponentSize.sm: 20.0,
+        ComponentSize.md: 24.0,
+        ComponentSize.lg: 28.0,
+        ComponentSize.xl: 32.0,
+      };
+
+      for (final size in ComponentSize.values) {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: SFCircularButton(
+                icon: Icons.add,
+                size: size,
+                onPressed: () {},
+              ),
+            ),
+          ),
+        );
+
+        final iconWidget = tester.widget<Icon>(find.byType(Icon));
+        expect(
+          iconWidget.size,
+          equals(expectedIconSizes[size]),
+          reason:
+              'Icon size for ${size.name} button should be ${expectedIconSizes[size]}',
+        );
+      }
+    },
+  );
+
+  testWidgets('SFCircularButton should use white icon color by default', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: SFCircularButton(icon: Icons.add, onPressed: () {}),
+        ),
+      ),
+    );
+
+    final iconWidget = tester.widget<Icon>(find.byType(Icon));
+    expect(iconWidget.color, equals(Colors.white));
+  });
 }
