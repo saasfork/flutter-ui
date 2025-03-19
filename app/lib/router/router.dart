@@ -10,20 +10,16 @@ import 'package:saasfork_core/saasfork_core.dart';
 import 'package:saasfork_firebase_service/saasfork_firebase_service.dart';
 
 class AppRouter {
-  // Routes accessibles sans authentification
   static final List<String> _publicRoutes = [loginPath];
-
-  // Routes accessibles avec authentification
   static final List<String> _privateRoutes = [homePath, profilePath];
 
   static GoRouter getRouter(BuildContext context) {
-    final authProvider = Provider.of<SFFirebaseAuthProvider>(context);
+    final authState = context.watch<SFFirebaseAuthProvider>().autState;
 
     Future<String?> authMiddleware(
       BuildContext? context,
       NavigationState state,
     ) async {
-      final authState = authProvider.autState;
       final currentPath = state.path;
       final isAuthenticated = authState?.isAuthenticated ?? false;
 
