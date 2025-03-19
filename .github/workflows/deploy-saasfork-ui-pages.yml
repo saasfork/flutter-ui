@@ -59,30 +59,68 @@ jobs:
           fi
 
       - name: Déploiement sur le dépôt cible
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_CODE }}
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
+          
+          # Vérifier le token d'accès
+          if [ -z "$GITHUB_TOKEN" ]; then
+            echo "Le token d'accès PAT_CODE n'est pas défini."
+            exit 1
+          fi
+          
+          echo "Configuration du dépôt cible..."
+          REPO_URL="https://${GITHUB_TOKEN}@github.com/saasfork/saasfork-ui-widgetbook.git"
           
           # Utiliser un répertoire temporaire pour le clone
           mkdir -p tmp_deploy
           cd tmp_deploy
           
-          # Cloner uniquement la branche nécessaire pour minimiser les données
-          git clone --single-branch --branch main https://x-access-token:${{ secrets.PAT_CODE }}@github.com/saasfork/saasfork-ui-widgetbook.git . || git clone https://x-access-token:${{ secrets.PAT_CODE }}@github.com/saasfork/saasfork-ui-widgetbook.git .
+          # Essayer de vérifier si le dépôt cible existe et est accessible
+          echo "Vérification de l'accès au dépôt cible..."
+          git ls-remote "$REPO_URL" HEAD &> /dev/null
+          if [ $? -ne 0 ]; then
+            echo "Erreur: Impossible d'accéder au dépôt cible. Vérifiez les permissions du token."
+            exit 1
+          fi
           
-          # Créer/basculer vers la branche main
-          git checkout main || git checkout --orphan main
+          # Vérifier si le dépôt est vide
+          REPO_EMPTY=0
+          git ls-remote --exit-code "$REPO_URL" HEAD &> /dev/null || REPO_EMPTY=1
+          
+          # Clone du dépôt
+          echo "Clonage du dépôt cible..."
+          git clone "$REPO_URL" .
+          
+          if [ $REPO_EMPTY -eq 1 ]; then
+            echo "Le dépôt semble être vide. Initialisation d'une nouvelle branche main..."
+            git checkout --orphan main
+          else
+            echo "Basculement vers la branche main..."
+            git checkout main || git checkout -b main
+          fi
           
           # Préserver le répertoire .git mais supprimer le reste
           find . -maxdepth 1 ! -name .git -exec rm -rf {} \; 2>/dev/null || true
           
           # Copier les fichiers du build
+          echo "Copie des fichiers du build..."
           cp -r ../widgetbook/build/web/* .
           
           # Créer un fichier .nojekyll pour éviter le traitement Jekyll
           touch .nojekyll
           
           # Ajouter, commit et push
+          echo "Préparation du commit..."
           git add -A
-          git diff --staged --quiet || git commit -m "Déploiement de Widgetbook - $(date +"%Y-%m-%d %H:%M:%S")"
-          git push origin main
+          
+          if git diff --staged --quiet; then
+            echo "Aucun changement à déployer."
+          else
+            echo "Commit des changements..."
+            git commit -m "Déploiement de Widgetbook - $(date +"%Y-%m-%d %H:%M:%S")"
+            
+            echo "Push vers le dépôt cible..."
+            git push -u origin main
