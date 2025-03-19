@@ -19,10 +19,9 @@ jobs:
       - name: Checkout du code
         uses: actions/checkout@v3
 
-      - name: Configuration de Flutter
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.x'
           channel: 'stable'
           cache: true  # Mise en cache des dépendances pour accélérer les builds
 
@@ -124,3 +123,4 @@ jobs:
             
             echo "Push vers le dépôt cible..."
             git push -u origin main
+          fi
