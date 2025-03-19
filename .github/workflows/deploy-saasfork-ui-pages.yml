@@ -25,6 +25,11 @@ jobs:
 
       - name: Installation des dépendances
         run: cd widgetbook && flutter pub get
+      
+      - name: Génération des fichiers de configuration Widgetbook
+        run: |
+          cd widgetbook
+          dart run build_runner build -d
 
       - name: Génération des fichiers de localisation
         run: |
