@@ -8,6 +8,9 @@ on:
     # paths:
     #   - 'widgetbook/**'  # Ne déclencher que si des changements dans le répertoire widgetbook
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
