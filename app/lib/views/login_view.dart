@@ -55,7 +55,7 @@ class _LoginViewState extends State<LoginView> {
           Text(
             JsonEncoder.withIndent(
               '  ',
-            ).convert(firebaseAuthProvider.currentUser?.toJson()),
+            ).convert(firebaseAuthProvider.autState?.toJson()),
           ),
         ],
       ),

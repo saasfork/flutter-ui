@@ -49,32 +49,56 @@ abstract class StateNotifier<T> extends ChangeNotifier {
   T? _state;
 
   /// Returns the current state value.
-  ///
-  /// May return null if the state hasn't been initialized or has been reset.
-  ///
-  /// Example:
-  /// ```dart
-  /// final authNotifier = AuthNotifier();
-  /// if (authNotifier.state != null) {
-  ///   // User is logged in
-  /// }
-  /// ```
   T? get state => _state;
 
   /// Updates the state with a new value and notifies all listeners.
   ///
   /// This will trigger a rebuild of all widgets that depend on this notifier.
+  void setState(T newState) {
+    _state = newState;
+    notifyListeners();
+  }
+
+  /// Modifies the state using a function that transforms the current state.
+  ///
+  /// This method does NOT notify listeners by default, allowing silent state updates.
   ///
   /// Example:
   /// ```dart
   /// class UserNotifier extends StateNotifier<User> {
-  ///   void login(User user) {
-  ///     setState(user); // Update state and notify listeners
+  ///   void updateUserName(String newName) {
+  ///     // Update user name without triggering a rebuild
+  ///     mutateState((currentUser) => currentUser!.copyWith(name: newName));
   ///   }
   /// }
   /// ```
-  void setState(T newState) {
-    _state = newState;
+  void mutateState(T Function(T? currentState) mutator) {
+    _state = mutator(_state);
+    // N'émet pas de notification par défaut
+  }
+
+  /// Applies a mutation to the state and then notifies listeners.
+  ///
+  /// This combines mutateState and notifyChanges into one call for convenience.
+  ///
+  /// Example:
+  /// ```dart
+  /// class UserNotifier extends StateNotifier<User> {
+  ///   void updateUserAndNotify(String newName) {
+  ///     mutateStateAndNotify((currentUser) => currentUser!.copyWith(name: newName));
+  ///   }
+  /// }
+  /// ```
+  void mutateStateAndNotify(T Function(T? currentState) mutator) {
+    mutateState(mutator);
+    notifyListeners();
+  }
+
+  /// Forces notification to all listeners without changing the state.
+  ///
+  /// Useful after using mutateState when you want to control precisely when
+  /// the UI should update.
+  void notifyChanges() {
     notifyListeners();
   }
 

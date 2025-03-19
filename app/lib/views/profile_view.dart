@@ -17,8 +17,8 @@ class ProfileView extends StatelessWidget {
         children: [
           SFProfileView(
             profileModel: ProfileModel(
-              email: firebaseAuthProvider.currentUser?.email ?? '',
-              username: firebaseAuthProvider.currentUser?.username ?? '',
+              email: firebaseAuthProvider.autState?.user?.email ?? '',
+              username: firebaseAuthProvider.autState?.user?.username ?? '',
             ),
             additionalData: ProfileFormData(
               labelUsername: 'Username',
@@ -30,8 +30,17 @@ class ProfileView extends StatelessWidget {
               saveButton: 'Save',
               deleteButton: 'Delete',
             ),
-            onSubmit: (ProfileModel profileModel) {
-              print(profileModel.toMap());
+            onSubmit: (ProfileModel profileModel) async {
+              await firebaseAuthProvider.updateUserProfile(
+                username: profileModel.username,
+                email: profileModel.email,
+              );
+
+              // if (result.status) {
+              //   print('Profile updated successfully');
+              // } else {
+              //   print('Error updating profile: ${result.errorMessage}');
+              // }
             },
           ),
         ],

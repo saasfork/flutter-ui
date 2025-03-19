@@ -10,24 +10,47 @@ import 'package:saasfork_core/saasfork_core.dart';
 import 'package:saasfork_firebase_service/saasfork_firebase_service.dart';
 
 class AppRouter {
+  // Routes accessibles sans authentification
+  static final List<String> _publicRoutes = [loginPath];
+
+  // Routes accessibles avec authentification
+  static final List<String> _privateRoutes = [homePath, profilePath];
+
   static GoRouter getRouter(BuildContext context) {
     final authProvider = Provider.of<SFFirebaseAuthProvider>(context);
-    final isLoggedIn = authProvider.currentUser != null;
 
     Future<String?> authMiddleware(
       BuildContext? context,
       NavigationState state,
     ) async {
-      final isLoggedIn = authProvider.currentUser != null;
+      final authState = authProvider.autState;
+      final currentPath = state.path;
+      final isAuthenticated = authState?.isAuthenticated ?? false;
 
-      if (!isLoggedIn && state.path != loginPath) return loginPath;
-      if (isLoggedIn && state.path == loginPath) return homePath;
+      // if (authState?.state == AuthState.updating) {
+      //   // Ignorer les redirections pendant les mises à jour
+      //   return null;
+      // }
+
+      /// Je suis authentifié et j'accède à une route privée
+      if (isAuthenticated && _privateRoutes.contains(currentPath)) {
+        return null;
+      }
+
+      /// Je ne suis pas authentifié et j'accède à une route privée
+      if (!isAuthenticated && !_publicRoutes.contains(currentPath)) {
+        return loginPath;
+      }
+
+      /// Je suis authentifié et j'accède à une route public
+      if (isAuthenticated && _publicRoutes.contains(currentPath)) {
+        return homePath;
+      }
 
       return null;
     }
 
     return GoRouter(
-      initialLocation: isLoggedIn ? homePath : loginPath,
       routes: [
         GoRoute(path: loginPath, builder: (context, state) => LoginView()),
         GoRoute(path: profilePath, builder: (context, state) => ProfileView()),

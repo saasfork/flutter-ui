@@ -77,7 +77,7 @@ Future<String?> authMiddleware(
   NavigationState state,
 ) async {
   // Vérifier si l'utilisateur est connecté
-  final isLoggedIn = authProvider.currentUser != null;
+  final isLoggedIn = authProvider.autState != null;
 
   // Rediriger vers la page de connexion si non connecté
   if (!isLoggedIn && state.path != '/login') return '/login';

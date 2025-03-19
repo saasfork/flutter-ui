@@ -27,13 +27,46 @@ Future<void> main() async {
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
+  Future<SFFirebaseAuthProvider> _initializeAuthProvider() async {
+    final provider = SFFirebaseAuthProvider();
+    // Attendre que le premier état soit défini (idle ou authentifié)
+    await provider.initialize();
+
+    return provider;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => SFFirebaseAuthProvider()),
-      ],
-      child: RouterInitialize(),
+    return FutureBuilder(
+      future: _initializeAuthProvider(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // TODO : Vrai loader
+          return MaterialApp(
+            home: Scaffold(body: Center(child: CircularProgressIndicator())),
+          );
+        }
+
+        if (snapshot.hasError) {
+          // TODO : Vrai error
+          return MaterialApp(
+            home: Scaffold(
+              body: Center(child: Text('Error: ${snapshot.error}')),
+            ),
+          );
+        }
+
+        final authProvider = snapshot.data!;
+
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider<SFFirebaseAuthProvider>.value(
+              value: authProvider,
+            ),
+          ],
+          child: RouterInitialize(),
+        );
+      },
     );
   }
 }
