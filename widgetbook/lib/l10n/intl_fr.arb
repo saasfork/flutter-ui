@@ -22,5 +22,6 @@
     "profile_placeholder_name": "Entrez votre nom",
     "profile_error_name_required": "Veuillez entrer votre nom",
     "profile_save_button": "Enregistrer",
+    "profile_logout_button": "Déconnexion",
     "profile_delete_button": "Supprimer"
 }

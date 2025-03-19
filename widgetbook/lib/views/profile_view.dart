@@ -21,6 +21,7 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   Map<String, dynamic> values = {};
   bool deleted = false;
+  bool logout = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,7 @@ class _ProfileViewState extends State<ProfileView> {
       errorUsernameRequired: S.current.profile_error_name_required,
       errorEmailInvalid: S.current.error_email_invalid,
       saveButton: S.current.profile_save_button,
+      logoutButton: S.current.profile_logout_button,
       deleteButton: S.current.profile_delete_button,
     );
 
@@ -48,12 +50,21 @@ class _ProfileViewState extends State<ProfileView> {
                   setState(() {
                     values = p0.toMap();
                     deleted = false;
+                    logout = false;
+                  });
+                },
+                onLogout: () {
+                  setState(() {
+                    logout = true;
+                    deleted = false;
+                    values = {};
                   });
                 },
                 onDelete:
                     () => setState(() {
                       values = {};
                       deleted = true;
+                      logout = false;
                     }),
               ),
             ),
@@ -79,6 +90,15 @@ class _ProfileViewState extends State<ProfileView> {
                   Text(
                     JsonEncoder.withIndent('  ').convert(values),
                     style: TextStyle(fontFamily: 'monospace', fontSize: 14),
+                  ),
+                if (logout)
+                  Text(
+                    'User logged out',
+                    style: TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 14,
+                      color: Colors.blue,
+                    ),
                   ),
                 if (deleted)
                   Text(
