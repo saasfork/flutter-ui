@@ -1,0 +1,77 @@
+name: Déploiement de Widgetbook sur GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'widgetbook/**'  # Ne déclencher que si des changements dans le répertoire widgetbook
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      - name: Configuration de Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.x'
+          channel: 'stable'
+          cache: true  # Mise en cache des dépendances pour accélérer les builds
+
+      - name: Installation des dépendances
+        run: cd widgetbook && flutter pub get
+        
+      - name: Vérifier la structure du projet
+        run: |
+          if [ ! -d "widgetbook" ]; then
+            echo "Le répertoire widgetbook n'existe pas!"
+            exit 1
+          fi
+
+      - name: Construction de l'application pour le web
+        run: |
+          cd widgetbook
+          flutter build web --release \
+            --base-href "/" \
+            --web-renderer canvaskit \
+            --dart-define=FLUTTER_WEB_USE_SKIA=true
+            
+      - name: Vérifier que le build a réussi
+        run: |
+          if [ ! -d "widgetbook/build/web" ]; then
+            echo "Le build a échoué!"
+            exit 1
+          fi
+
+      - name: Déploiement sur le dépôt cible
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          
+          # Utiliser un répertoire temporaire pour le clone
+          mkdir -p tmp_deploy
+          cd tmp_deploy
+          
+          # Cloner uniquement la branche nécessaire pour minimiser les données
+          git clone --single-branch --branch gh-pages https://x-access-token:${{ secrets.PAT_CODE }}@github.com/saasfork/saasfork-ui-widgetbook.git . || git clone https://x-access-token:${{ secrets.PAT_CODE }}@github.com/saasfork/saasfork-ui-widgetbook.git .
+          
+          # Créer/basculer vers la branche gh-pages
+          git checkout gh-pages || git checkout --orphan gh-pages
+          
+          # Préserver le répertoire .git mais supprimer le reste
+          find . -maxdepth 1 ! -name .git -exec rm -rf {} \; 2>/dev/null || true
+          
+          # Copier les fichiers du build
+          cp -r ../widgetbook/build/web/* .
+          
+          # Créer un fichier .nojekyll pour éviter le traitement Jekyll
+          touch .nojekyll
+          
+          # Ajouter, commit et push
+          git add -A
+          git diff --staged --quiet || git commit -m "Déploiement de Widgetbook - $(date +"%Y-%m-%d %H:%M:%S")"
+          git push origin gh-pages
