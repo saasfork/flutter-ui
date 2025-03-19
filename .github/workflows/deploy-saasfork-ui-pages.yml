@@ -68,10 +68,10 @@ jobs:
           cd tmp_deploy
           
           # Cloner uniquement la branche nécessaire pour minimiser les données
-          git clone --single-branch --branch gh-pages https://x-access-token:${{ secrets.PAT_CODE }}@github.com/saasfork/saasfork-ui-widgetbook.git . || git clone https://x-access-token:${{ secrets.PAT_CODE }}@github.com/saasfork/saasfork-ui-widgetbook.git .
+          git clone --single-branch --branch main https://x-access-token:${{ secrets.PAT_CODE }}@github.com/saasfork/saasfork-ui-widgetbook.git . || git clone https://x-access-token:${{ secrets.PAT_CODE }}@github.com/saasfork/saasfork-ui-widgetbook.git .
           
-          # Créer/basculer vers la branche gh-pages
-          git checkout gh-pages || git checkout --orphan gh-pages
+          # Créer/basculer vers la branche main
+          git checkout main || git checkout --orphan main
           
           # Préserver le répertoire .git mais supprimer le reste
           find . -maxdepth 1 ! -name .git -exec rm -rf {} \; 2>/dev/null || true
@@ -85,4 +85,4 @@ jobs:
           # Ajouter, commit et push
           git add -A
           git diff --staged --quiet || git commit -m "Déploiement de Widgetbook - $(date +"%Y-%m-%d %H:%M:%S")"
-          git push origin gh-pages
+          git push origin main
