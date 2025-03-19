@@ -14,6 +14,7 @@ class ProfileFormData {
 
   /// Textes des boutons
   final String saveButton;
+  final String logoutButton;
   final String deleteButton;
 
   const ProfileFormData({
@@ -24,6 +25,7 @@ class ProfileFormData {
     required this.errorUsernameRequired,
     required this.errorEmailInvalid,
     required this.saveButton,
+    required this.logoutButton,
     required this.deleteButton,
   });
 
@@ -37,6 +39,7 @@ class ProfileFormData {
       'error_username_required': errorUsernameRequired,
       'error_email_invalid': errorEmailInvalid,
       'save_button': saveButton,
+      'logout_button': logoutButton,
       'delete_button': deleteButton,
     };
   }

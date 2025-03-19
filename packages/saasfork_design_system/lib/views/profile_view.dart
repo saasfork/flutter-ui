@@ -8,6 +8,7 @@ class SFProfileView extends StatelessWidget {
   final ProfileModel? profileModel;
   final Function(ProfileModel) onSubmit;
   final Function()? onDelete;
+  final Function()? onLogout;
 
   const SFProfileView({
     super.key,
@@ -15,6 +16,7 @@ class SFProfileView extends StatelessWidget {
     required this.onSubmit,
     this.onDelete,
     this.profileModel,
+    this.onLogout,
   });
 
   @override
@@ -31,6 +33,12 @@ class SFProfileView extends StatelessWidget {
             onSubmit(typedValues);
           },
         ),
+        if (onLogout != null)
+          SFMainButton(
+            label: 'Déconnexion',
+            onPressed: onLogout!,
+            color: AppColors.orange,
+          ),
         if (onDelete != null)
           SFMainButton(
             label: additionalData.deleteButton,
