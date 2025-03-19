@@ -80,29 +80,38 @@ jobs:
           # Essayer de vérifier si le dépôt cible existe et est accessible
           echo "Vérification de l'accès au dépôt cible..."
           git ls-remote "$REPO_URL" HEAD &> /dev/null
-          if [ $? -ne 0 ]; then
-            echo "Erreur: Impossible d'accéder au dépôt cible. Vérifiez les permissions du token."
-            exit 1
-          fi
+          REPO_ACCESS=$?
           
-          # Vérifier si le dépôt est vide
-          REPO_EMPTY=0
-          git ls-remote --exit-code "$REPO_URL" HEAD &> /dev/null || REPO_EMPTY=1
-          
-          # Clone du dépôt
-          echo "Clonage du dépôt cible..."
-          git clone "$REPO_URL" .
-          
-          if [ $REPO_EMPTY -eq 1 ]; then
-            echo "Le dépôt semble être vide. Initialisation d'une nouvelle branche main..."
-            git checkout --orphan main
+          # Déterminer si le dépôt est accessible mais vide ou inaccessible
+          if [ $REPO_ACCESS -ne 0 ]; then
+            # Vérifier si le dépôt existe mais est vide
+            git ls-remote "$REPO_URL" refs/heads/* &> /dev/null
+            if [ $? -ne 0 ]; then
+              echo "Erreur: Impossible d'accéder au dépôt cible. Vérifiez les permissions du token."
+              exit 1
+            else
+              echo "Le dépôt existe mais est complètement vide. Configuration d'un nouveau dépôt..."
+              # Initialiser un nouveau dépôt
+              git init
+              git remote add origin "$REPO_URL"
+            fi
           else
-            echo "Basculement vers la branche main..."
-            git checkout main || git checkout -b main
+            # Clone du dépôt
+            echo "Clonage du dépôt cible..."
+            git clone "$REPO_URL" .
+            
+            # Vérifier si le dépôt a une branche main
+            if ! git show-ref --verify --quiet refs/remotes/origin/main; then
+              echo "Le dépôt existe mais n'a pas de branche main. Création d'une nouvelle branche..."
+              git checkout --orphan main
+            else
+              echo "Basculement vers la branche main..."
+              git checkout main || git checkout -b main
+            fi
           fi
           
           # Préserver le répertoire .git mais supprimer le reste
-          find . -maxdepth 1 ! -name .git -exec rm -rf {} \; 2>/dev/null || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} \; 2>/dev/null || true
           
           # Copier les fichiers du build
           echo "Copie des fichiers du build..."
@@ -115,12 +124,9 @@ jobs:
           echo "Préparation du commit..."
           git add -A
           
-          if git diff --staged --quiet; then
-            echo "Aucun changement à déployer."
-          else
-            echo "Commit des changements..."
-            git commit -m "Déploiement de Widgetbook - $(date +"%Y-%m-%d %H:%M:%S")"
-            
-            echo "Push vers le dépôt cible..."
-            git push -u origin main
-          fi
+          # Commit même si c'est le premier
+          git commit -m "Déploiement de Widgetbook - $(date +"%Y-%m-%d %H:%M:%S")"
+          
+          echo "Push vers le dépôt cible..."
+          # Forcer le push si c'est un nouveau dépôt
+          git push -u origin main
