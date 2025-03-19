@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
+import 'package:saasfork_design_system/saasfork_design_system.dart';
 import 'package:saasfork_firebase_service/saasfork_firebase_service.dart';
 
 Future<void> main() async {
@@ -62,6 +63,9 @@ class MainApp extends StatelessWidget {
           providers: [
             ChangeNotifierProvider<SFFirebaseAuthProvider>.value(
               value: authProvider,
+            ),
+            ChangeNotifierProvider<ThemeToggle>(
+              create: (context) => ThemeToggle(),
             ),
           ],
           child: RouterInitialize(),

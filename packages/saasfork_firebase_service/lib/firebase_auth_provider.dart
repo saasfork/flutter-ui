@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:saasfork_core/saasfork_core.dart';
 import 'package:saasfork_firebase_service/cloud_functions/user_functions.dart';
 import 'package:saasfork_firebase_service/models/auth_state_model.dart';
-import 'package:saasfork_firebase_service/state_notifier.dart';
 
 /// Les états d'authentification possibles:
 /// - [AuthState.idle] : État initial ou après déconnexion

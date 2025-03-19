@@ -13,6 +13,9 @@ dependencies:
   font_awesome_flutter: ^10.8.0
   reactive_forms: ^17.0.1
 
+  saasfork_core:
+    path: ../saasfork_core
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

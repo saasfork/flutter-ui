@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:saasfork_firebase_service/state_notifier.dart';
+import 'package:saasfork_core/utils/utils.dart';
 
 // Classe concrète pour tester StateNotifier
 class TestStateNotifier<T> extends StateNotifier<T> {

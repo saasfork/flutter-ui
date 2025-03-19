@@ -10,8 +10,11 @@ export 'organisms/organisms.dart';
 // Foundation
 export 'foundations/foundations.dart';
 
+// Utils
+export 'utils/utils.dart';
+
 // Views
-  export 'views/views.dart';
+export 'views/views.dart';
 
 // Theme
 export 'themes/app_theme.dart';
