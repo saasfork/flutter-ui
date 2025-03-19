@@ -25,6 +25,11 @@ jobs:
 
       - name: Installation des dépendances
         run: cd widgetbook && flutter pub get
+
+      - name: Génération des fichiers de localisation
+        run: |
+          cd widgetbook
+          flutter pub run intl_utils:generate
         
       - name: Vérifier la structure du projet
         run: |
