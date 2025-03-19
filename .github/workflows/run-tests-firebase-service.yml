@@ -22,6 +22,7 @@ jobs:
           cd packages/saasfork_firebase_service
           flutter pub get
 
+      # TODO: A remettre quand il y aura des tests
       # - name: Run Tests
       #   run: |
       #     cd packages/saasfork_firebase_service
