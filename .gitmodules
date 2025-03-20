@@ -1,0 +1,3 @@
+[submodule "packages/saasfork_core"]
+    path = packages/saasfork_core
+    url = git@github.com:saasfork/saasfork_core.git
