@@ -3,8 +3,8 @@ import 'package:app/views/home_view.dart';
 import 'package:app/views/login_view.dart';
 import 'package:app/views/profile_view.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:saasfork_core/saasfork_core.dart';
 import 'package:saasfork_firebase_service/saasfork_firebase_service.dart';
 
 part 'app_router.gr.dart';
@@ -17,7 +17,7 @@ class AuthGuard extends AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    debugPrint('AuthGuard checking route: ${resolver.route.name}');
+    log('AuthGuard checking route: ${resolver.route.name}');
     final isAuthenticated = ref.read(authProvider).isAuthenticated;
 
     if (isAuthenticated) {
@@ -38,7 +38,7 @@ class UnauthenticatedGuard extends AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    debugPrint('UnauthenticatedGuard checking route: ${resolver.route.name}');
+    log('UnauthenticatedGuard checking route: ${resolver.route.name}');
     final isAuthenticated = ref.read(authProvider).isAuthenticated;
 
     if (!isAuthenticated) {
