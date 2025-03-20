@@ -5,8 +5,8 @@
     path = saasfork/saasfork_design_system
     url = git@github.com:saasfork/saasfork_design_system.git
 [submodule "packages/saasfork_firebase_service"]
-    path = packages/saasfork_firebase_service
-    url = git@github.com:saasfork/saasfork_firebase_service.git
+	path = packages/saasfork_firebase_service
+	url = git@github.com:saasfork/saasfork_firebase_service.git
 [submodule "packages/saasfork_design_system"]
 	path = packages/saasfork_design_system
 	url = git@github.com:saasfork/saasfork_design_system.git
