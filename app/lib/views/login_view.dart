@@ -1,21 +1,19 @@
 import 'dart:convert';
 
+import 'package:app/constants.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:saasfork_design_system/saasfork_design_system.dart';
 import 'package:saasfork_firebase_service/firebase_auth_provider.dart';
 
-class LoginView extends StatefulWidget {
+@RoutePage()
+class LoginView extends ConsumerWidget {
   const LoginView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
-}
-
-class _LoginViewState extends State<LoginView> {
-  @override
-  Widget build(BuildContext context) {
-    final firebaseAuthProvider = Provider.of<SFFirebaseAuthProvider>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider);
 
     return Scaffold(
       body: Column(
@@ -43,20 +41,20 @@ class _LoginViewState extends State<LoginView> {
               onRegister: (RegisterModel registerModel) async {
                 final String email = registerModel.email;
                 final String password = registerModel.password;
-                await firebaseAuthProvider.register(email, password);
+                await ref.read(authProvider.notifier).register(email, password);
+
+                AutoRouter.of(context).pushPath(homePath);
               },
               onLogin: (LoginModel loginModel) async {
                 final String email = loginModel.email;
                 final String password = loginModel.password;
-                await firebaseAuthProvider.login(email, password);
+                await ref.read(authProvider.notifier).login(email, password);
+
+                AutoRouter.of(context).pushPath(homePath);
               },
             ),
           ),
-          Text(
-            JsonEncoder.withIndent(
-              '  ',
-            ).convert(firebaseAuthProvider.autState?.toJson()),
-          ),
+          Text(JsonEncoder.withIndent('  ').convert(authState.toJson())),
         ],
       ),
     );

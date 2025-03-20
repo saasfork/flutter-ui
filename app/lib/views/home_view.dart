@@ -1,7 +1,8 @@
 import 'package:app/constants.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
+@RoutePage()
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
@@ -13,7 +14,7 @@ class HomeView extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.person),
-            onPressed: () => context.go(profilePath),
+            onPressed: () => AutoRouter.of(context).pushPath(profilePath),
           ),
         ],
       ),

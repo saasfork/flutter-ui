@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:provider/provider.dart';
-import 'package:saasfork_design_system/saasfork_design_system.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:saasfork_firebase_service/models/auth_state_model.dart';
 import 'package:saasfork_firebase_service/saasfork_firebase_service.dart';
 
 Future<void> main() async {
@@ -22,55 +22,24 @@ Future<void> main() async {
     isDev: kDebugMode,
   );
 
-  runApp(MainApp());
+  runApp(ProviderScope(child: MainApp()));
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends ConsumerWidget {
   const MainApp({super.key});
 
-  Future<SFFirebaseAuthProvider> _initializeAuthProvider() async {
-    final provider = SFFirebaseAuthProvider();
-    // Attendre que le premier état soit défini (idle ou authentifié)
-    await provider.initialize();
-
-    return provider;
-  }
-
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _initializeAuthProvider(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // TODO : Vrai loader
-          return MaterialApp(
-            home: Scaffold(body: Center(child: CircularProgressIndicator())),
-          );
-        }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider);
 
-        if (snapshot.hasError) {
-          // TODO : Vrai error
-          return MaterialApp(
-            home: Scaffold(
-              body: Center(child: Text('Error: ${snapshot.error}')),
-            ),
-          );
-        }
+    if (authState.state == AuthState.error) {
+      return MaterialApp(
+        home: Scaffold(
+          body: Center(child: Text('Erreur: ${authState.errorMessage}')),
+        ),
+      );
+    }
 
-        final authProvider = snapshot.data!;
-
-        return MultiProvider(
-          providers: [
-            ChangeNotifierProvider<SFFirebaseAuthProvider>.value(
-              value: authProvider,
-            ),
-            ChangeNotifierProvider<ThemeToggle>(
-              create: (context) => ThemeToggle(),
-            ),
-          ],
-          child: RouterInitialize(),
-        );
-      },
-    );
+    return const RouterInitialize();
   }
 }
