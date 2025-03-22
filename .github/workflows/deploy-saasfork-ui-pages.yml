@@ -5,8 +5,8 @@ on:
     branches:
       - main
       - develop
-    paths:
-      - 'widgetbook/**'  # Ne déclencher que si des changements dans le répertoire widgetbook
+    # paths:
+    #   - 'widgetbook/**'  # Ne déclencher que si des changements dans le répertoire widgetbook
 
 permissions:
   contents: write
