@@ -18,6 +18,22 @@ jobs:
     steps:
       - name: Checkout du code
         uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'  # Important: récupérer tous les sous-modules
+          token: ${{ secrets.PAT_CODE }}  # Utiliser le token PAT pour avoir accès aux sous-modules privés
+      
+      - name: Vérification de la structure des sous-modules
+        run: |
+          echo "Liste des sous-modules:"
+          git submodule status
+          
+          if [ ! -d "widgetbook" ]; then
+            echo "Le répertoire widgetbook n'existe pas ou n'est pas correctement initialisé!"
+            exit 1
+          fi
+          
+          echo "Contenu du répertoire widgetbook:"
+          ls -la widgetbook/
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -38,13 +54,6 @@ jobs:
           cd widgetbook
           flutter pub run intl_utils:generate
         
-      - name: Vérifier la structure du projet
-        run: |
-          if [ ! -d "widgetbook" ]; then
-            echo "Le répertoire widgetbook n'existe pas!"
-            exit 1
-          fi
-
       - name: Construction de l'application pour le web
         run: |
           cd widgetbook
