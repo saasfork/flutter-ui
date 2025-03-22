@@ -584,10 +584,11 @@ packages:
   saasfork_core:
     dependency: transitive
     description:
-      path: "../packages/saasfork_core"
-      relative: true
-    source: path
-    version: "0.0.1"
+      name: saasfork_core
+      sha256: "88145149d19a759af4a1109aa76e4d5df2e8f4d54ae881da31840678657644c6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   saasfork_design_system:
     dependency: "direct main"
     description:
