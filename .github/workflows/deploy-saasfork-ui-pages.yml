@@ -5,8 +5,10 @@ on:
     branches:
       - main
       - develop
-    # paths:
-    #   - 'widgetbook/**'  # Ne déclencher que si des changements dans le répertoire widgetbook
+    paths:
+      - 'widgetbook/**'         
+      - 'packages/saasfork_design_system/**'
+      - '.github/workflows/deploy-saasfork-ui-pages.yml'
 
 permissions:
   contents: write
